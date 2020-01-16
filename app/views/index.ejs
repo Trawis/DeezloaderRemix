@@ -893,7 +893,7 @@
 							<tr>
 							<td class="hide-on-med-and-up">
 								<a href="#" v-on:click="moreInfo(release.link, $event)" class="album_chip" v-bind:data-link="release.link"><div class="chip"><img v-bind:src="release.cover_small || 'img/noCover.jpg'"/><i v-if="release.explicit_lyrics" class="material-icons valignicon tiny materialize-red-text tooltipped" data-tooltip="Explicit">explicit</i> {{release.title}}</div></a>
-								<i v-if="checkNewRelease(release.release_date)" class="material-icons valignicon small yellow-text text-darken-3">fiber_new</i>
+								<i v-if="checkNewRelease(release.release_date)" class="material-icons valignicon small" style="color:#FF7300">fiber_new</i>
 								<p class="remove-margin secondary-text">{{release.release_date}}</p>
 							</td>
 							<td class="hide-on-small-only breakline">
@@ -901,7 +901,7 @@
 									<i v-if="release.explicit_lyrics" class="material-icons valignicon tiny materialize-red-text tooltipped" data-tooltip="Explicit">explicit</i>
 									{{release.title}}
 								</div></a>
-								<i v-if="checkNewRelease(release.release_date)" class="material-icons valignicon small yellow-text text-darken-3">fiber_new</i>
+								<i v-if="checkNewRelease(release.release_date)" class="material-icons valignicon small" style="color:#FF7300;">fiber_new</i>
 							</td>
 							<td class="hide-on-small-only">{{release.release_date}}</td>
 							<td><button class="waves-effect btn-flat" v-on:click="downloadClick(release.link, $event)" v-on:contextmenu="downloadRClick(release.link, $event)" v-bind:data-link="release.link"><i class="material-icons">file_download</i></button></td>
