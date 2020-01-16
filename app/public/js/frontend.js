@@ -990,10 +990,11 @@ var artistModalApp = new Vue({
 		checkNewRelease: function(date){
 			var g1 = new Date();
     	var g2 = new Date(date);
+			g2.setDate(g2.getDate()+3)
 			g1.setHours(0,0,0,0)
-			if (g1.getTime() <= g2.getTime())
+			if (g1.getTime() <= g2.getTime()){
 				return true;
-			else {
+			}else {
 				return false;
 			}
 		}
