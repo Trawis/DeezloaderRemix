@@ -986,6 +986,16 @@ var artistModalApp = new Vue({
 		},
 		changeTab: function(tab){
 			this.currentTab = tab
+		},
+		checkNewRelease: function(date){
+			var g1 = new Date();
+    	var g2 = new Date(date);
+			g1.setHours(0,0,0,0)
+			if (g1.getTime() <= g2.getTime())
+				return true;
+			else {
+				return false;
+			}
 		}
 	},
 	updated: function(){
