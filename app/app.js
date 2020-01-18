@@ -3030,7 +3030,7 @@ function getID3(track, settings){
 	if(track.album.label && settings.tags.publisher)
 		writer.setFrame('TPUB', track.album.label);
 	if(track.album.genreArray && settings.tags.genre)
-		writer.setFrame('TCON', [track.album.genreArray.join(settings.multitagSeparator)]);
+		writer.setFrame('TCON', [track.album.genreArray.join(settings.selectedDefaultSeparator)]);
 	if(track.copyright && settings.tags.copyright)
 		writer.setFrame('TCOP', track.copyright);
 	if (0 < parseInt(track.date.year)) {
