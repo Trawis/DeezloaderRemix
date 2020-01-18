@@ -3042,7 +3042,7 @@ function getID3(track, settings){
 	if (0 < parseInt(track.bpm) && settings.tags.bpm)
 		writer.setFrame('TBPM', track.bpm);
 	if(track.composerArray && settings.tags.composer)
-		writer.setFrame('TCOM', [track.composerArray.join(settings.multitagSeparator)]);
+		writer.setFrame('TCOM', [track.composerArray.join(settings.selectedDefaultSeparator)]);
 	if(track.replayGain && settings.tags.replayGain)
 		writer.setFrame('TXXX', {
 			description: 'REPLAYGAIN_TRACK_GAIN',
