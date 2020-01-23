@@ -198,11 +198,23 @@
 	"All downloads removed!": "Tous les téléchargements ont été supprimés !",
 	"Download {{ type }}": "Télécharger {{ type }}",
 	"Spotify Playlist": "Playlist Spotify",
-	"%n songs":[
-    [0, 0, "%n morceaux"],
-    [1, 1, "%n morceau"],
-    [2, null, "%n morceaux"]
-  ],
+	"%n songs": [
+		[
+			0,
+			0,
+			"%n morceaux"
+		],
+		[
+			1,
+			1,
+			"%n morceau"
+		],
+		[
+			2,
+			null,
+			"%n morceaux"
+		]
+	],
 	"by %{name}": "par %{name}",
 	"Translations": "Traductions",
 	"Deezer Login": "Identifiant Deezer",
@@ -230,5 +242,12 @@
 	"Start Case": "Majuscule Au Début De Chaque Mot",
 	"Sentence case": "Majuscule seulement au début de la phrase",
 	"Case for Title": "Casse pour le titre",
-	"Case for Artist": "Casse pour l'artiste"
+	"Case for Artist": "Casse pour l'artiste",
+	"Default": "Par défaut",
+	"& and feat.": "& et feat.",
+	"Artist Tag Format": "Format de la métadonnée pour l'artiste",
+	"Move featured artists to trackname": "Déplacer les artistes participants (featuring) vers le nom de la piste",
+	"Use Null Separator in MP3s": "Utiliser un séparateur nul dans les fichiers MP3",
+	"Preview Volume": "Volume sonore des extraits",
+	"Illegal character replacer": "Remplacement de caractère inapproprié"
 }
