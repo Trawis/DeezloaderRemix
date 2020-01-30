@@ -1607,7 +1607,7 @@ io.sockets.on('connection', function (s) {
 							logger.warn(`[${track.artist.name} - ${track.title}] Failed to download track, searching for alternative`)
 							var _trackID = await convertMetadata2Deezer(track.artist.name, track.title, track.album.title)
 							if (_trackID != "0"){
-								track = await s.Deezer.getTrack()
+								track = await s.Deezer.getTrack(_trackID)
 								track.searched = true
 								return downloadTrackObject(track, queueId, settings)
 							}else{
