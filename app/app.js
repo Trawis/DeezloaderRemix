@@ -1682,51 +1682,35 @@ io.sockets.on('connection', function (s) {
 						}
 					}
 				}
-				if (settings.savePlaylistAsCompilation && settings.plName){
-					track.album = settings.playlist
-					track.album.trackTotal = track.album.fullSize
-					track.trackNumber = track.position+1
-					if (track.album.dateObj) {
-						track.date = track.album.dateObj
-					}else if(!track.date){
-						track.date = {
-							day: 0,
-							month: 0,
-							year: 0,
-							slicedYear: 0
-						}
-					}
+				track.album.artist = {
+					id: ajson.artist.id,
+					name: ajson.artist.name,
+					picture: ajson.artist.picture_small.substring(46,ajson.artist.picture_small.length-24),
+				}
+				track.album.trackTotal = ajson.nb_tracks
+				if (ajson.record_type){
+					track.album.recordType = ajson.record_type
 				}else{
-					track.album.artist = {
-						id: ajson.artist.id,
-						name: ajson.artist.name,
-						picture: ajson.artist.picture_small.substring(46,ajson.artist.picture_small.length-24),
+					track.album.recordType = switchReleaseType(track.album.recordType)
+				}
+				track.album.barcode = ajson.upc
+				if (ajson.explicit_lyrics)
+					track.album.explicit = ajson.explicit_lyrics;
+				if(ajson.label)
+					track.album.label = ajson.label;
+				if (ajson.release_date) {
+					track.date = {
+						day: ajson.release_date.slice(8,10),
+						month: ajson.release_date.slice(5,7),
+						year: ajson.release_date.slice(0, 4),
+						slicedYear: (settings.dateFormatYear == "2" ? ajson.release_date.slice(2, 4) : ajson.release_date.slice(0, 4))
 					}
-					track.album.trackTotal = ajson.nb_tracks
-					if (ajson.record_type){
-						track.album.recordType = ajson.record_type
-					}else{
-						track.album.recordType = switchReleaseType(track.album.recordType)
-					}
-					track.album.barcode = ajson.upc
-					if (ajson.explicit_lyrics)
-						track.album.explicit = ajson.explicit_lyrics;
-					if(ajson.label)
-						track.album.label = ajson.label;
-					if (ajson.release_date) {
-						track.date = {
-							day: ajson.release_date.slice(8,10),
-							month: ajson.release_date.slice(5,7),
-							year: ajson.release_date.slice(0, 4),
-							slicedYear: (settings.dateFormatYear == "2" ? ajson.release_date.slice(2, 4) : ajson.release_date.slice(0, 4))
-						}
-					}else if(!track.date){
-						track.date = {
-							day: 0,
-							month: 0,
-							year: 0,
-							slicedYear: 0
-						}
+				}else if(!track.date){
+					track.date = {
+						day: 0,
+						month: 0,
+						year: 0,
+						slicedYear: 0
 					}
 				}
 				if(ajson.genres && ajson.genres.data[0] && ajson.genres.data[0].name){
@@ -2045,6 +2029,22 @@ io.sockets.on('connection', function (s) {
 		track.album.date = track.dateString
 		track.album.year = track.date.year
 
+		if (settings.savePlaylistAsCompilation && settings.plName){
+			track.album = settings.playlist
+			track.album.trackTotal = track.album.fullSize
+			track.trackNumber = track.position+1
+			if (track.album.dateObj) {
+				track.date = track.album.dateObj
+			}else if(!track.date){
+				track.date = {
+					day: 0,
+					month: 0,
+					year: 0,
+					slicedYear: 0
+				}
+			}
+		}
+
 		// TODO: Move to a separate function
 		// Generating file name
 		let filename = ""
@@ -2082,6 +2082,9 @@ io.sockets.on('connection', function (s) {
 			(settings.createArtistFolder && settings.plName && settings.savePlaylistAsCompilation) ||
 			(settings.createArtistFolder && settings.plName && settings.createStructurePlaylist)
 		){
+			if (track.id<0 && !track.album.artist){
+				track.album.artist = track.artist
+			}
 			filepath += antiDot(settingsRegexArtist(track.album.artist, settings.artistNameTemplate)) + path.sep;
 			artistPath = filepath;
 		}
