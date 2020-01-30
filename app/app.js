@@ -3054,7 +3054,7 @@ function getID3(track, settings){
 			value: track.explicit ? "1" : "0"
 		});
 	if (settings.savePlaylistAsCompilation)
-		writer.setFrame('TCMP', 1)
+		writer._setIntegerFrame('TCMP', 1)
 	writer.addTag();
 	return Buffer.from(writer.arrayBuffer);
 }
