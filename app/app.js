@@ -3087,10 +3087,12 @@ function getID3v1(track, settings){
 	}
 	if (settings.tags.trackNumber){
 		if (track.trackNumber <= 65535)
-			if (track.trackNumber > 255)
-				tagBuffer.writeUInt8(parseInt(track.trackNumber),125)
-			else
+			if (track.trackNumber > 255){
+				tagBuffer.writeUInt8(parseInt(track.trackNumber >> 8),125)
+				tagBuffer.writeUInt8(parseInt(track.trackNumber & 255),126)
+			}else{
 				tagBuffer.writeUInt8(parseInt(track.trackNumber),126)
+			}
 	}
 	if (settings.tags.genre){
 		let selectedGenre = Array.isArray(track.album.genre) ? track.album.genre[0] : track.album.genre;
