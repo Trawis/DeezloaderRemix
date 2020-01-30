@@ -812,7 +812,11 @@ io.sockets.on('connection', function (s) {
 					bitrate: data.bitrate+"",
 					type: "spotifyplaylist",
 					obj: resp.body,
-					cover: resp.body.images[0].url,
+				}
+				if (Array.isArray(resp.body.images) && resp.body.images.length){
+					_playlist.cover = resp.body.images[0].url
+				}else{
+					_playlist.cover = "https://e-cdns-images.dzcdn.net/images/cover//56x56-000000-80-0-0.jpg"
 				}
 				var numPages=Math.floor((_playlist.size-1)/100)
 				var trackList = new Array(_playlist.size)
@@ -1433,9 +1437,14 @@ io.sockets.on('connection', function (s) {
 					explicit: false,
 					compilation: true,
 					discTotal: 1,
-					cover: downloading.obj.images[0].url.replace("56x56",`${downloading.settings.embeddedArtworkSize}x${downloading.settings.embeddedArtworkSize}`),
 					fullSize: downloading.trackList.length,
 				}
+				if (Array.isArray(downloading.obj.images) && downloading.obj.images.length){
+					downloading.settings.playlist.cover = downloading.obj.images[0].url
+				}else{
+					downloading.settings.playlist.cover = "https://e-cdns-images.dzcdn.net/images/cover//56x56-000000-80-0-0.jpg"
+				}
+				downloading.settings.playlist.cover = downloading.settings.playlist.cover.replace("56x56",`${downloading.settings.embeddedArtworkSize}x${downloading.settings.embeddedArtworkSize}`)
 				downloading.downloadPromise = new Promise((resolve,reject)=>{
 					downloading.trackList.every(function (t, index) {
 						downloading.tracksData[index] = {
@@ -1521,7 +1530,7 @@ io.sockets.on('connection', function (s) {
 					if (downloading.settings.saveArtwork){
 						if (!fs.existsSync(downloading.filePath)) fs.mkdirpSync(downloading.filePath);
 						let imgPath = downloading.filePath + antiDot(settingsRegexAlbum(downloading.settings.playlist, downloading.settings.coverImageTemplate))+(downloading.settings.PNGcovers ? ".png" : ".jpg");
-						if (downloading.obj.images){
+						if (Array.isArray(downloading.obj.images) && downloading.obj.images.length){
 							downloading.cover = downloading.obj.images[0].url
 							request.get(downloading.cover, {strictSSL: false,encoding: 'binary'}, function(error,response,body){
 								if(error){

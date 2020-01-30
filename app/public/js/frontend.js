@@ -1390,7 +1390,7 @@ socket.on("getMyPlaylistList", function (data) {
 		var currentResultPlaylist = data.playlists[i]
 		$(tableBody).append(
 				`<tr>
-				<td><img src="${currentResultPlaylist.image}" class="rounded" width="56px" /></td>
+				<td><img src="${currentResultPlaylist.image || "/img/noCover.jpg"}" class="rounded" width="56px" /></td>
 				<td>${currentResultPlaylist.title}</td>
 				<td>${currentResultPlaylist.songs}</td>
 				</tr>`)
