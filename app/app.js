@@ -2318,6 +2318,7 @@ io.sockets.on('connection', function (s) {
 		try{
 			await downloadingPromise
 		}catch(err){
+			if (fs.existsSync(writePath)) fs.unlinkSync(writePath)
 			if (err==="Track is no longer provided by deezer"){
 				if (track.selectedFormat == 9){
 					track.filesize.flac = 0
