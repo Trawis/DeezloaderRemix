@@ -242,5 +242,12 @@
 	"Start Case": "Primeira Letra Em Maiúsculo",
 	"Sentence case": "Coincidir maiúsculas/minúsculas da sentença",
 	"Case for Title": "Tipo da Letra para Título",
-	"Case for Artist": "Tipo da Letra para Artista"
+	"Case for Artist": "Tipo da Letra para Artista",
+	"Default": "Padrão",
+	"& and feat.": "& e feat.",
+	"Artist Tag Format": "Formato da Tag do Artista",
+	"Move featured artists to trackname": "Adicionar artistas convidados no nome da faixa",
+	"Use Null Separator in MP3s": "Usar Separador Nulo em MP3s",
+	"Preview Volume": "Volume da Prévia",
+	"Illegal character replacer": "Substituir caractere ilegal"
 }
