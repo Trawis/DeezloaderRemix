@@ -51,9 +51,18 @@ function error(message){
 	fs.appendFileSync(logsLocation, removeColors(str)+"\r\n");
 	return;
 }
+function errorStack(message){
+	var str = message;
+	if (process.env.NODE_ENV == "development"){
+		console.log(str);
+	}
+	fs.appendFileSync(logsLocation, str+"\r\n");
+	return;
+}
 
 module.exports.debug = debug;
 module.exports.info = info;
 module.exports.warn = warn;
 module.exports.error = error;
+module.exports.errorStack = errorStack;
 module.exports.logPath = logsLocation;

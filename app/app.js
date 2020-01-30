@@ -141,6 +141,7 @@ io.sockets.on('connection', function (s) {
 	})
 	.catch(err=>{
 		logger.error(`CountryCheck failed: ${err}`)
+		if (err.stack) logger.errorStack(err.stack)
 	})
 
 	logger.info("Connection received!")
@@ -186,8 +187,9 @@ io.sockets.on('connection', function (s) {
 			logger.info("Running the latest version!")
 		}
 	})
-	.catch(error=>{
-		logger.error(`UpdateCheck failed: ${error}`)
+	.catch(err=>{
+		logger.error(`UpdateCheck failed: ${err}`)
+		if (err.stack) logger.errorStack(err.stack)
 	})
 
 	// Function for logging in
@@ -203,6 +205,7 @@ io.sockets.on('connection', function (s) {
 		}catch(err){
 			s.emit("login", {error: err.message})
 			logger.error(`Login failed: ${err.message}`)
+			if (err.stack) logger.errorStack(err.stack)
 		}
 	})
 
@@ -219,6 +222,7 @@ io.sockets.on('connection', function (s) {
 		}catch(err){
 			s.emit("login", {error: err.message})
 			logger.error(`Login failed: ${err.message}`)
+			if (err.stack) logger.errorStack(err.stack)
 		}
 	});
 
@@ -232,6 +236,7 @@ io.sockets.on('connection', function (s) {
 		}catch(err){
 			s.emit('login', {error: err.message})
 			logger.error(`Autologin failed: ${err.message}`)
+			if (err.stack) logger.errorStack(err.stack)
 		}
 	})
 
@@ -268,7 +273,8 @@ io.sockets.on('connection', function (s) {
 			}
 			s.emit("getChartsCountryList", {countries: countries, selected: data.selected})
 		}catch(err){
-			logger.error(`getChartsCountryList failed: ${err.stack}`)
+			logger.error(`getChartsCountryList failed: ${err}`)
+			if (err.stack) logger.errorStack(err.stack)
 			return
 		}
 	})
@@ -287,7 +293,8 @@ io.sockets.on('connection', function (s) {
 			})
 		}catch(err){
 			s.emit("getChartsTrackListByCountry", {err: err})
-			logger.error(`getChartsTrackListById failed: ${err.stack}`)
+			logger.error(`getChartsTrackListById failed: ${err}`)
+			if (err.stack) logger.errorStack(err.stack)
 			return
 		}
 	}
@@ -312,7 +319,8 @@ io.sockets.on('connection', function (s) {
 			let playlistId = charts[countries.indexOf(country)].id
 			await getChartsTrackListById(playlistId)
 		}catch(err){
-			logger.error(`getChartsTrackListByCountry failed: ${err.stack}`)
+			logger.error(`getChartsTrackListByCountry failed: ${err}`)
+			if (err.stack) logger.errorStack(err.stack)
 			return
 		}
 	}
@@ -365,12 +373,14 @@ io.sockets.on('connection', function (s) {
 					playlists = playlists.concat(playlistList)
 				}catch(err){
 					logger.error(`Spotify playlist failed loading: ${err}`)
+					if (err.stack) logger.errorStack(err.stack)
 				}
 			}
 			logger.info(`Loaded ${playlists.length} Playlist${playlists.length>1 ? "s" : ""}`)
 			s.emit("getMyPlaylistList", {playlists: playlists})
 		}catch(err){
 			logger.error(`getMyPlaylistList failed: ${err}`)
+			if (err.stack) logger.errorStack(err.stack)
 			return
 		}
 	}
@@ -396,7 +406,8 @@ io.sockets.on('connection', function (s) {
 			let searchObject = await s.Deezer.legacySearch(encodeURIComponent(text), type, 25, index)
 			return {type: type, items: searchObject.data, update: index>=1}
 		} catch (err) {
-			logger.error(`search failed: ${err.stack}`)
+			logger.error(`search failed: ${err}`)
+			if (err.stack) logger.errorStack(err.stack)
 			return {type: type, items: [], update: index>=1}
 		}
 	}
@@ -423,7 +434,8 @@ io.sockets.on('connection', function (s) {
 				s.emit("getTrackList", {response: response, id: data.id, reqType: data.type})
 			}catch(err){
 				s.emit("getTrackList", {err: "wrong artist id", response: {}, id: data.id, reqType: data.type})
-				logger.error(`getTrackList failed: ${err.stack}`)
+				logger.error(`getTrackList failed: ${err}`)
+				if (err.stack) logger.errorStack(err.stack)
 				return
 			}
 		}else if(data.type == "spotifyplaylist" && spotifySupport){
@@ -460,7 +472,8 @@ io.sockets.on('connection', function (s) {
 				}while(offset<=numPages)
 				s.emit("getTrackList", {response: response, id: data.id, reqType: data.type})
 			}catch(err){
-				logger.error(`getTrackList failed: ${err.stack}`)
+				logger.error(`getTrackList failed: ${err}`)
+				if (err.stack) logger.errorStack(err.stack)
 			}
 		}else{
 			let reqType = data.type.charAt(0).toUpperCase() + data.type.slice(1)
@@ -471,7 +484,8 @@ io.sockets.on('connection', function (s) {
 				s.emit("getTrackList", {response: response, id: data.id, reqType: data.type})
 			}catch(err){
 				s.emit("getTrackList", {err: "wrong id "+reqType, response: {}, id: data.id, reqType: data.type})
-				logger.error(`getTrackList failed: ${err.stack}`)
+				logger.error(`getTrackList failed: ${err}`)
+				if (err.stack) logger.errorStack(err.stack)
 				return
 			}
 		}
@@ -572,7 +586,8 @@ io.sockets.on('connection', function (s) {
 			if (data.spotifyId) _track.spotifyId = `${data.spotifyId}:${data.bitrate}`
 			addToQueue(_track)
 		}catch(err){
-			logger.error(`downloadTrack failed: ${err.stack ? err.stack : err}`)
+			logger.error(`downloadTrack failed: ${err}`)
+			if (err.stack) logger.errorStack(err.stack)
 			message = ""
 			if (err.message){
 				switch (err.message){
@@ -644,7 +659,8 @@ io.sockets.on('connection', function (s) {
 			}
 			return
 		}catch(err){
-			logger.error(`downloadAlbum failed: ${err.stack ? err.stack : err}`)
+			logger.error(`downloadAlbum failed: ${err}`)
+			if (err.stack) logger.errorStack(err.stack)
 			message = ""
 			if (err.message){
 				switch (err.message){
@@ -678,7 +694,8 @@ io.sockets.on('connection', function (s) {
 				}, 100)
 			})(albums.data.length-1)
 		}catch(err){
-			logger.error(`downloadArtist failed: ${err.stack ? err.stack : err}`)
+			logger.error(`downloadArtist failed: ${err}`)
+			if (err.stack) logger.errorStack(err.stack)
 			message = ""
 			if (err.message){
 				switch (err.message){
@@ -723,7 +740,8 @@ io.sockets.on('connection', function (s) {
 			}
 			addToQueue(_playlist)
 		}catch(err){
-			logger.error(`downloadPlaylist failed: ${err.stack ? err.stack : err}`)
+			logger.error(`downloadPlaylist failed: ${err}`)
+			if (err.stack) logger.errorStack(err.stack)
 			message = ""
 			if (err.message){
 				switch (err.message){
@@ -768,7 +786,8 @@ io.sockets.on('connection', function (s) {
 			}
 			addToQueue(_playlist)
 		}catch(err){
-			logger.error(`downloadArtistTop failed: ${err.stack ? err.stack : err}`)
+			logger.error(`downloadArtistTop failed: ${err}`)
+			if (err.stack) logger.errorStack(err.stack)
 			message = ""
 			if (err.message){
 				switch (err.message){
@@ -836,7 +855,8 @@ io.sockets.on('connection', function (s) {
 				_playlist.obj.creation_date = creationDate
 				addToQueue(_playlist)
 			}catch(err){
-				logger.error(`downloadSpotifyPlaylist failed: ${err.stack ? err.stack : err}`)
+				logger.error(`downloadSpotifyPlaylist failed: ${err}`)
+				if (err.stack) logger.errorStack(err.stack)
 				if (err.message && err.message == "Bad Request"){
 					s.emit("message", {title: req.__("You setted it up wrong!"), msg: req.__("Somehow you managed to fuck it up. Good job.<br>Now go do the guide again.<br><br>If you need the link again <a href=\"https://notabug.org/RemixDevs/DeezloaderRemix/wiki/Spotify+Features\">Here it is</a>")})
 				}else{
@@ -873,7 +893,8 @@ io.sockets.on('connection', function (s) {
 					logger.error(`Can't find the track on Deezer!`)
 				}
 			}catch(err){
-				logger.error(`downloadSpotifyTrack failed: ${err.stack ? err.stack : err}`)
+				logger.error(`downloadSpotifyTrack failed: ${err}`)
+				if (err.stack) logger.errorStack(err.stack)
 				s.emit("silentlyCancelDownload", `${data.id}:${data.bitrate}`)
 				localDownloadQueue.splice(localDownloadQueue.indexOf(`${track.id}:${data.bitrate}`), 1);
 				return
@@ -905,7 +926,8 @@ io.sockets.on('connection', function (s) {
 					logger.error(`Can't find the album on Deezer!`)
 				}
 			}catch(err){
-				logger.error(`downloadSpotifyAlbum failed: ${err.stack ? err.stack : err}`)
+				logger.error(`downloadSpotifyAlbum failed: ${err}`)
+				if (err.stack) logger.errorStack(err.stack)
 				s.emit("silentlyCancelDownload", `${data.id}:${data.bitrate}`)
 				localDownloadQueue.splice(localDownloadQueue.indexOf(`${track.id}:${data.bitrate}`), 1);
 				return
@@ -1078,6 +1100,7 @@ io.sockets.on('connection', function (s) {
 						downloading.downloaded++
 					}catch(err){
 						logger.error(`[${downloading.obj.artist.name} - ${downloading.obj.title}] ${err}`)
+						if (err.stack) logger.errorStack(err.stack)
 						downloading.errorLog += `${downloading.obj.id} | ${downloading.obj.artist.name} - ${downloading.obj.title} | ${err}\r\n`
 						downloading.failed++
 					}
@@ -1102,7 +1125,10 @@ io.sockets.on('connection', function (s) {
 				try{
 					await downloadPromise
 				}catch(err){
-					if (err) logger.error(`queueDownload:track failed: ${err.stack ? err.stack : err}`)
+					if (err){
+						logger.error(`queueDownload:track failed: ${err}`)
+						if (err.stack) logger.errorStack(err.stack)
+					}
 					logger.info("Downloading Stopped")
 				}
 			break
@@ -1181,6 +1207,7 @@ io.sockets.on('connection', function (s) {
 								downloading.failed++
 								downloading.errorLog += `${t.id} | ${t.artist.name} - ${t.title} | ${err}\r\n`
 								logger.error(`[${t.artist.name} - ${t.title}] ${err}`)
+								if (err.stack) logger.errorStack(err.stack)
 							}
 							/*io.sockets.emit("downloadProgress", {
 								queueId: downloading.queueId,
@@ -1237,7 +1264,10 @@ io.sockets.on('connection', function (s) {
 						fs.writeFileSync(path, downloading.playlistArr.join("\r\n"));
 					}
 				}catch(err){
-					if (err) logger.error(`queueDownload:album failed: ${err.stack ? err.stack : err}`)
+					if (err){
+						logger.error(`queueDownload:album failed: ${err}`)
+						if (err.stack) logger.errorStack(err.stack)
+					}
 					logger.info("Stopping the album queue");
 				}
 			break
@@ -1301,6 +1331,7 @@ io.sockets.on('connection', function (s) {
 								downloading.failed++
 								downloading.errorLog += `${t.id} | ${t.artist.name} - ${t.title} | ${err}\r\n`
 								logger.error(`[${t.artist.name} - ${t.title}] ${err}`)
+								if (err.stack) logger.errorStack(err.stack)
 							}
 							/*io.sockets.emit("downloadProgress", {
 								queueId: downloading.queueId,
@@ -1361,14 +1392,16 @@ io.sockets.on('connection', function (s) {
 						let imgPath = downloading.filePath + antiDot(settingsRegexAlbum(downloading.settings.playlist, downloading.settings.coverImageTemplate))+(downloading.settings.PNGcovers ? ".png" : ".jpg");
 						if (downloading.obj.picture_small){
 							downloading.cover = downloading.obj.picture_small.replace("56x56",`${downloading.settings.localArtworkSize}x${downloading.settings.localArtworkSize}`)
-							request.get(downloading.cover, {strictSSL: false,encoding: 'binary'}, function(error,response,body){
-								if(error){
-									logger.error(error.stack);
+							request.get(downloading.cover, {strictSSL: false,encoding: 'binary'}, function(err,response,body){
+								if(err){
+									logger.error(err);
+									if (err.stack) logger.errorStack(err.stack)
 									return;
 								}
 								fs.outputFile(imgPath,body,'binary',function(err){
 									if(err){
-										logger.error(err.stack);
+										logger.error(err);
+										if (err.stack) logger.errorStack(err.stack)
 										return;
 									}
 									logger.info(`Cover downloaded for: ${downloading.settings.plName}`)
@@ -1377,7 +1410,10 @@ io.sockets.on('connection', function (s) {
 						}
 					}
 				}catch(err){
-					if (err) logger.error(`queueDownload:playlist failed: ${err.stack ? err.stack : err}`)
+					if (err){
+						logger.error(`queueDownload:playlist failed: ${err}`)
+						if (err.stack) logger.errorStack(err.stack)
+					}
 					logger.info("Stopping the playlist queue")
 				}
 			break
@@ -1396,7 +1432,8 @@ io.sockets.on('connection', function (s) {
 						try{
 							downloading.playlistContent[i] = await convertSpotify2Deezer(t)
 						}catch(err){
-							logger.error(`queueDownload:spotifyplaylist failed during conversion: ${err.stack ? err.stack : err}`)
+							logger.error(`queueDownload:spotifyplaylist failed during conversion: ${err}`)
+							if (err.stack) logger.errorStack(err.stack)
 						}
 					})
 				}
@@ -1471,7 +1508,8 @@ io.sockets.on('connection', function (s) {
 							}catch(err){
 								downloading.failed++
 								downloading.errorLog += `${t.id} | ${t.artist.name} - ${t.title} | ${err}\r\n`
-								logger.error(`[${t.artist.name} - ${t.title}] ${err.stack ? err.stack : err}`)
+								logger.error(`[${t.artist.name} - ${t.title}] ${err}`)
+								if (err.stack) logger.errorStack(err.stack)
 							}
 							/*io.sockets.emit("downloadProgress", {
 								queueId: downloading.queueId,
@@ -1532,14 +1570,16 @@ io.sockets.on('connection', function (s) {
 						let imgPath = downloading.filePath + antiDot(settingsRegexAlbum(downloading.settings.playlist, downloading.settings.coverImageTemplate))+(downloading.settings.PNGcovers ? ".png" : ".jpg");
 						if (Array.isArray(downloading.obj.images) && downloading.obj.images.length){
 							downloading.cover = downloading.obj.images[0].url
-							request.get(downloading.cover, {strictSSL: false,encoding: 'binary'}, function(error,response,body){
-								if(error){
-									logger.error(error.stack);
+							request.get(downloading.cover, {strictSSL: false,encoding: 'binary'}, function(err,response,body){
+								if(err){
+									logger.error(err);
+									if (err.stack) logger.errorStack(err.stack)
 									return;
 								}
 								fs.outputFile(imgPath,body,'binary',function(err){
 									if(err){
-										logger.error(err.stack);
+										logger.error(err);
+										if (err.stack) logger.errorStack(err.stack)
 										return;
 									}
 									logger.info(`Cover downloaded for: ${downloading.settings.plName}`)
@@ -1548,7 +1588,10 @@ io.sockets.on('connection', function (s) {
 						}
 					}
 				}catch(err){
-					if (err) logger.error(`queueDownload:spotifyplaylist failed: ${err.stack ? err.stack : err}`)
+					if (err){
+						logger.error(`queueDownload:spotifyplaylist failed: ${err}`)
+						if (err.stack) logger.errorStack(err.stack)
+					}
 					logger.info("Stopping the playlist queue")
 				}
 			break
@@ -1616,6 +1659,7 @@ io.sockets.on('connection', function (s) {
 							}
 						}else{
 							logger.error(`[${track.artist.name} - ${track.title}] Failed to download: ${err}`)
+							if (err.stack) logger.errorStack(err.stack)
 							return
 						}
 					}
@@ -2122,9 +2166,10 @@ io.sockets.on('connection', function (s) {
 					fs.outputFileSync(imgPath,body,'binary')
 					track.album.picturePath = (imgPath).replace(/\\/g, "/")
 					logger.info(`[${track.artist.name} - ${track.title}] Cover downloaded!`)
-				}catch(error){
-					logger.error(`[${track.artist.name} - ${track.title}] Cannot download Album Image: ${error}`)
+				}catch(err){
+					logger.error(`[${track.artist.name} - ${track.title}] Cannot download Album Image: ${err}`)
 					logger.error(`Album art link: ${track.album.pictureUrl}`)
+					if (err.stack) logger.errorStack(err.stack)
 					track.album.pictureUrl = undefined
 					track.album.picturePath = undefined
 				}
@@ -2138,8 +2183,9 @@ io.sockets.on('connection', function (s) {
 						var body = await request.get(track.album.pictureUrl.replace(`${settings.embeddedArtworkSize}x${settings.embeddedArtworkSize}`,`${settings.localArtworkSize}x${settings.localArtworkSize}`), {strictSSL: false,encoding: 'binary'})
 						fs.outputFileSync(imgPath,body,'binary')
 						logger.info(`[${track.artist.name} - ${track.title}] Local Cover downloaded!`)
-					}catch(error){
-						logger.error(`[${track.artist.name} - ${track.title}] Cannot download Local Cover: ${error}`)
+					}catch(err){
+						logger.error(`[${track.artist.name} - ${track.title}] Cannot download Local Cover: ${err}`)
+						if (err.stack) logger.errorStack(err.stack)
 					}
 				}
 			}
@@ -2161,6 +2207,7 @@ io.sockets.on('connection', function (s) {
 						logger.info(`[${track.artist.name} - ${track.title}] Saved Artist Image`)
 					}catch(err){
 						logger.error(`[${track.artist.name} - ${track.title}] Cannot download Artist Image: ${err}`)
+						if (err.stack) logger.errorStack(err.stack)
 					}
 				}
 			}
@@ -2304,6 +2351,7 @@ io.sockets.on('connection', function (s) {
 							resolve()
 						}catch(err){
 							logger.error(`[${track.artist.name} - ${track.title}] Decryption error: ${err}`)
+							if (err.stack) logger.errorStack(err.stack)
 							reject(err)
 							return false
 						}
@@ -2671,8 +2719,9 @@ function settingsRegex(track, filename, playlist) {
 		filename = filename.replace(/%genre%/g, fixName(track.album.genre ? (Array.isArray(track.album.genre) ? track.album.genre[0] : track.album.genre) : "Unknown", configFile.userDefined.illegalCharacterReplacer));
 		filename = filename.replace(/[/\\]/g, path.sep)
 		return filename.trim();
-	}catch(e){
-		logger.error("settingsRegex failed: "+e.stack)
+	}catch(err){
+		logger.error("settingsRegex failed: "+err)
+		if (err.stack) logger.errorStack(err.stack)
 	}
 }
 
@@ -2728,8 +2777,9 @@ function settingsRegexAlbum(album, foldername) {
 		}
 		foldername = foldername.replace(/[/\\]/g, path.sep)
 		return foldername.trim();
-	}catch(e){
-		logger.error("settingsRegexAlbum failed: "+e)
+	}catch(err){
+		logger.error("settingsRegexAlbum failed: "+err)
+		if (err.stack) logger.errorStack(err.stack)
 	}
 
 }
@@ -3276,10 +3326,16 @@ function getTypeFromLink(link) {
 
 // Show crash error in console for debugging
 process.on('unhandledRejection', function (err) {
-	if (err) logger.error(err.stack ? err.stack : err)
+	if (err){
+		logger.error(err)
+		if (err.stack) logger.errorStack(err.stack)
+	}
 })
 process.on('uncaughtException', function (err) {
-	if (err) logger.error(err.stack ? err.stack : err)
+	if (err){
+		logger.error(err.stack ? err.stack : err)
+		if (err.stack) logger.errorStack(err.stack)
+	}
 })
 
 // Exporting vars
