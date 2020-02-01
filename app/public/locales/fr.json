@@ -28,7 +28,7 @@
 	"Preferred bitrate": "Débit préféré",
 	"Fallback to lower bitrates if preferred is not available": "Recourir à des débits plus faibles si le débit préféré n'est pas disponible",
 	"Fallback to search if song is not available": "Revenir à la recherche si le morceau n'est pas disponible",
-	"Download albums with one track as a single track": "Télécharger les albums ne contenant qu'une seule piste en tant que morceau unique",
+	"Download albums with one track as a single track": "Télécharger les albums ne contenant qu'une seule piste en tant que morceau individuel",
 	"Create log file for Errors inside download folder": "Créer un fichier journal d'erreurs dans le dossier de téléchargement",
 	"Create log file for Alternatives inside download folder": "Créer un fichier journal d'alternatives dans le dossier de téléchargement",
 	"Create M3U8 (Playlist) File": "Créer un fichier M3U8 (playlist)",
@@ -229,7 +229,7 @@
 	"Local Artwork Size": "Taille de l'illustration locale (séparée des fichiers audio)",
 	"Playlist names template": "Gabarit pour les noms de playlist",
 	"Artist names template": "Gabarit pour les noms de l'artiste",
-	"Save single tracks in a folder": "Enregistrer les pistes uniques dans un dossier",
+	"Save single tracks in a folder": "Enregistrer les pistes individuelles dans un dossier",
 	"You are offline!": "Vous êtes hors ligne !",
 	"Back online!": "À nouveau en ligne !",
 	"Attempting Autologin...": "Tentative de connexion automatique...",
@@ -248,6 +248,7 @@
 	"Artist Tag Format": "Format de la métadonnée pour l'artiste",
 	"Move featured artists to trackname": "Déplacer les artistes participants (featuring) vers le nom de la piste",
 	"Use Null Separator in MP3s": "Utiliser un séparateur nul dans les fichiers MP3",
-	"Preview Volume": "Volume sonore des extraits",
-	"Illegal character replacer": "Remplacement de caractère inapproprié"
+	"Preview Volume": "Volume sonore des aperçus de pistes",
+	"Illegal character replacer": "Remplacement de caractère inapproprié",
+	"Create album folders for single tracks": "Créer des dossiers d'album pour les pistes individuelles"
 }
