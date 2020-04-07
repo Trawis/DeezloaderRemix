@@ -2143,13 +2143,11 @@ io.sockets.on('connection', function (s) {
 			}
 			downloadQueue[queueId].percentage += 100/downloadQueue[queueId].size
 			if (Math.round(downloadQueue[queueId].percentage) != downloadQueue[queueId].lastPercentage) {
-				if (Math.round(downloadQueue[queueId].percentage) % 5 == 0) {
-					downloadQueue[queueId].lastPercentage = Math.round(downloadQueue[queueId].percentage)
-					io.sockets.emit("downloadProgress", {
-						queueId: queueId,
-						percentage: downloadQueue[queueId].lastPercentage
-					})
-				}
+				downloadQueue[queueId].lastPercentage = Math.round(downloadQueue[queueId].percentage)
+				io.sockets.emit("downloadProgress", {
+					queueId: queueId,
+					percentage: downloadQueue[queueId].lastPercentage
+				})
 			}
 			return;
 		}else{
@@ -2265,14 +2263,12 @@ io.sockets.on('connection', function (s) {
 										if ((percentage - downloadQueue[queueId].percentage > 1) || (chunkLength == complete)) {
 											downloadQueue[queueId].percentage = percentage
 											if (Math.round(downloadQueue[queueId].percentage) != downloadQueue[queueId].lastPercentage) {
-												if (Math.round(downloadQueue[queueId].percentage) % 5 == 0) {
-													downloadQueue[queueId].lastPercentage = Math.round(downloadQueue[queueId].percentage)
-													io.sockets.emit("downloadProgress", {
-														queueId: queueId,
-														percentage: downloadQueue[queueId].lastPercentage
-													})
-													//logger.info("Updating download progress to: " + downloadQueue[queueId].lastPercentage)
-												}
+												downloadQueue[queueId].lastPercentage = Math.round(downloadQueue[queueId].percentage)
+												io.sockets.emit("downloadProgress", {
+													queueId: queueId,
+													percentage: downloadQueue[queueId].lastPercentage
+												})
+												//logger.info("Updating download progress to: " + downloadQueue[queueId].lastPercentage)
 											}
 										}
 									}catch(err){}
@@ -2293,14 +2289,12 @@ io.sockets.on('connection', function (s) {
 										let chunkProgres = ((chunk.length / complete)) / downloadQueue[queueId].size * 100
 										downloadQueue[queueId].percentage += chunkProgres
 										if (Math.round(downloadQueue[queueId].percentage) != downloadQueue[queueId].lastPercentage) {
-											if (Math.round(downloadQueue[queueId].percentage) % 5 == 0) {
-												downloadQueue[queueId].lastPercentage = Math.round(downloadQueue[queueId].percentage)
-												io.sockets.emit("downloadProgress", {
-													queueId: queueId,
-													percentage: downloadQueue[queueId].lastPercentage
-												})
-												//logger.info("Updating download progress to: " + downloadQueue[queueId].lastPercentage)
-											}
+											downloadQueue[queueId].lastPercentage = Math.round(downloadQueue[queueId].percentage)
+											io.sockets.emit("downloadProgress", {
+												queueId: queueId,
+												percentage: downloadQueue[queueId].lastPercentage
+											})
+											//logger.info("Updating download progress to: " + downloadQueue[queueId].lastPercentage)
 										}
 									}catch(err){}
 								}
