@@ -3163,16 +3163,6 @@ function getID3v1(track, settings){
 	return tagBuffer
 }
 
-function updateProgressBar(queueId, progress) {
-	if (Math.round(progress) % 5 == 0) {
-		io.sockets.emit("downloadProgress", {
-			queueId: queueId,
-			percentage: progress
-		})
-		logger.info("Updating download progress to: " + progress)
-	}
-}
-
 // Filters only Extended Ascii characters
 function extAsciiFilter(string){
 	let output = ""
