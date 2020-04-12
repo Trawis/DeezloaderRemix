@@ -562,7 +562,6 @@ $('#modal_settings_btn_saveSettings').click(function () {
 		dateFormatYear: $('#modal_settings_select_dateFormatYear').val(),
 		savePlaylistAsCompilation: $('#modal_settings_cbox_savePlaylistAsCompilation').is(':checked'),
 		removeAlbumVersion : $('#modal_settings_cbox_removeAlbumVersion').is(':checked'),
-		moveFeaturedToTitle : $('#modal_settings_cbox_moveFeaturedToTitle').is(':checked'),
 		useNullSeparator : $('#modal_settings_cbox_useNullSeparator').is(':checked'),
 		saveID3v1 : $('#modal_settings_cbox_saveID3v1').is(':checked'),
 		titleCasing : $('#modal_settings_select_titleCasing').val(),
@@ -696,7 +695,6 @@ function fillSettingsModal(settings, spotifySettings = {clientId: "", clientSecr
 	$('#modal_settings_select_dateFormatYear').val(settings.dateFormatYear).formSelect()
 	$('#modal_settings_cbox_savePlaylistAsCompilation').prop('checked', settings.savePlaylistAsCompilation)
 	$('#modal_settings_cbox_removeAlbumVersion').prop('checked', settings.removeAlbumVersion)
-	$('#modal_settings_cbox_moveFeaturedToTitle').prop('checked', settings.moveFeaturedToTitle)
 	$('#modal_settings_cbox_useNullSeparator').prop('checked', settings.useNullSeparator)
 	$('#modal_settings_cbox_saveID3v1').prop('checked', settings.saveID3v1)
 	$('#modal_settings_select_titleCasing').val(settings.titleCasing).formSelect()
