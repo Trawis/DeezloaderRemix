@@ -152,7 +152,7 @@ socket.on('getCookies', function(jar){
 // After Login
 socket.on("login", function (data) {
 	if (!data.error) {
-		$("#modal_settings_username").html(data.user.name)
+		$("#modal_settings_username").text(data.user.name)
 		$("#modal_settings_picture").attr("src",data.user.picture)
 		$("#side_user").text(data.user.name)
 		$("#side_avatar").attr("src",data.user.picture)
@@ -742,7 +742,7 @@ function fillSettingsModal(settings, spotifySettings = {clientId: "", clientSecr
 
 //#############################################MODAL_MSG##############################################\\
 function message(title, message) {
-	$('#modal_msg_title').html(title)
+	$('#modal_msg_title').text(title)
 	$('#modal_msg_message').html(message)
 	$('#modal_msg').modal('open')
 }
@@ -1589,8 +1589,8 @@ socket.on('updateQueue', function (data) {
 		return
 	}
 
-	$('#' + data.queueId).find('.queueDownloaded').html(data.downloaded + data.failed)
-	$('#' + data.queueId).find('.queueFailed').html(data.failed)
+	$('#' + data.queueId).find('.queueDownloaded').text(data.downloaded + data.failed)
+	$('#' + data.queueId).find('.queueFailed').text(data.failed)
 
 	if (data.failed == 0 && ((data.downloaded + data.failed) >= data.size)) {
 		$('#' + data.queueId).find('.eventBtn').html('<i class="material-icons">done</i>')
