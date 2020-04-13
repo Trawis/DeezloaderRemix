@@ -692,7 +692,7 @@
 							<b><%= __('Interface')%>:</b> <a href="http://materializecss.com/" target="_blank">Materialize CSS</a><br/>
 							<br/>
 							<b><%= __('Telegram Contacts')%></b><br/>
-							<b><a href="https://t.me/RemixDevs" target="_blank"><%= __('News Channel')%></a></b><br/>
+							<b><a href="https://t.me/RemixDevNews" target="_blank"><%= __('News Channel')%></a></b><br/>
 							<b><a href="https://t.me/DeezloaderRemixBeta" target="_blank"><%= __('Betas Channel')%></a></b><br/>
 							<b><a href="https://t.me/DeezloaderRemix" target="_blank"><%= __('Stable Releases Channel')%></a></b><br/>
 							<br>
@@ -736,12 +736,7 @@
 					<div class="collapsible-header waves-effect"><i class="material-icons">group</i><%= __('Contacts')%></div>
 					<div class="collapsible-body">
 						<p>
-							<%- __('Contacts_Text')%><br>
-							<ul>
-								<li><a href="https://t.me/DeezloaderItalia">Gruppo in Italiano</a></li>
-								<li><a href="https://t.me/joinchat/Ed1JxEn3_Bx1et6SCeLurg">Grupo en español</a></li>
-								<li><a href="https://t.me/deezloaderpt">Grupo em Português</a></li>
-						</ul>
+							<%- __('Contacts_Text')%>
 						</p>
 					</div>
 				</li>
@@ -755,44 +750,20 @@
 					<div class="collapsible-header waves-effect"><i class="material-icons">history</i><%= __('Changelog')%></div>
 					<div class="collapsible-body">
 						<p>
-							<h5>Version 4.3.0</h5>
-							<h6>Main changes:</h6>
-							&nbsp;&nbsp;+ Loginless download is back!<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ You can still login in the Settings to view your playlists<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Added option to export ARL<br>
-							&nbsp;&nbsp;+ Localization Support<br>
-							&nbsp;&nbsp;+ Merged Download from URL tab into Search tab<br>
-							&nbsp;&nbsp;+ Improved memory usage during downloads (Now you can download Continuous Mixes)<br>
-							&nbsp;&nbsp;+ Updated and improved UI<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Better feedback for errors and warnings<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Toast messages are forced to the bottom<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Made darkmode darker<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Charts are now alphabetically ordered<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Redesigned Download tab<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Made download bars more responsive<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Added PWA metadata for servermode<br>
-							&nbsp;&nbsp;+ Changed folder management structure<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Added create playlist folder option<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Added template names for playlist and artist folder<br>
-							<br>
-							<h6>New Features:</h6>
-							&nbsp;&nbsp;+ Added ID3v1 support<br>
-							&nbsp;&nbsp;+ Divided options for Local and Embedded cover size<br>
-							&nbsp;&nbsp;+ Added 2000x2000 cover option<br>
-							&nbsp;&nbsp;+ Added Case Settings for title and artists<br>
-							&nbsp;&nbsp;+ Added REST API<br>
-							&nbsp;&nbsp;+ Added Select song for Spotify Playlists<br>
-							&nbsp;&nbsp;+ Added support for 360 audio [No way to play them tho]<br>
-							&nbsp;&nbsp;+ Added option to rename the playlist file with the name of the folder<br>
-							<br>
-							<h6>Bugs fixes:</h6>
-							&nbsp;&nbsp;+ Finished implementing Save playlist as Compilation<br>
-							&nbsp;&nbsp;+ Fixed artwork caching<br>
-							&nbsp;&nbsp;+ Fixed issues with autologin not working properly<br>
-							&nbsp;&nbsp;+ Fixed the error 'ENOENT: no such file or directory, mkdir'<br>
-							&nbsp;&nbsp;+ Fixed artist tags being too excessive<br>
-							&nbsp;&nbsp;+ Fixed Explicit Variable on tracknames<br>
-							&nbsp;&nbsp;+ Fixed fallbacks not working properly<br/>
+							<h5>Version 4.4.0</h5>
+							- Fixed FLAC not downloading for some tracks<br>
+							- Fixed some tagging issues<br>
+							- Fixed autologin<br>
+							- Fixed download for albums/playlist with more than 255 songs<br>
+							- Fixed cover not downloading<br>
+							- Fixed XSS "exploit"<br>
+							- Added new badge in artist tab<br>
+							- Added preview volume<br>
+							- Added some new variables to the track and folder names<br>
+							- Added continuous scrolling<br>
+							- Added tab selection in artists<br>
+							- Added table sorting where possible<br>
+							- Added more multitag separators<br>
 							<br/>
 							<a href="https://notabug.org/RemixDevs/DeezloaderRemix/wiki/Changelog" target="_blank"><%= __('Full Changelog Here')%></a>
 						</p>
