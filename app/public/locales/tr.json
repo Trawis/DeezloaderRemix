@@ -229,5 +229,13 @@
 	"Start Case": "Her Sözcüğü Büyük Harfle Başlat",
 	"Sentence case": "Tümce düzeni",
 	"Case for Title": "Başlık için Harf Durumu",
-	"Case for Artist": "Sanatçı için Harf Durumu"
+	"Case for Artist": "Sanatçı için Harf Durumu",
+	"Default": "Varsayılan",
+	"& and feat.": "& ve feat.",
+	"Artist Tag Format": "Sanatçı Etiket Biçimi",
+	"Add featured artists to trackname": "Öne çıkan sanatçıları parça ismine ekle",
+	"Use Null Separator in MP3s": "MP3'lerde Boş Ayırıcı Kullan",
+	"Preview Volume": "Önizleme Ses Seviyesi",
+	"Illegal character replacer": "Geçersiz karakter değiştirici",
+	"Create album folders for single tracks": "Tek parçalar için albüm klasörleri oluştur"
 }

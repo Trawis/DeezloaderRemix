@@ -10,6 +10,9 @@ var modalQuality = document.getElementById('modal_quality');
 modalQuality.open = false
 let userSettings = {}
 let spotifySettings = {}
+var currentSearch = ""
+var currentIndex = 0
+var searchCapped = false
 
 var downloadQueue = []
 var loggedIn = false
@@ -17,6 +20,7 @@ var deezerNotAvailable = false
 
 let preview_track = document.getElementById('preview-track')
 let preview_stopped = true
+let preview_max_volume;
 const COUNTRIES = {"AF": "Afghanistan","AX": "\u00c5land Islands","AL": "Albania","DZ": "Algeria","AS": "American Samoa","AD": "Andorra","AO": "Angola","AI": "Anguilla","AQ": "Antarctica","AG": "Antigua and Barbuda","AR": "Argentina","AM": "Armenia","AW": "Aruba","AU": "Australia","AT": "Austria","AZ": "Azerbaijan","BS": "Bahamas","BH": "Bahrain","BD": "Bangladesh","BB": "Barbados","BY": "Belarus","BE": "Belgium","BZ": "Belize","BJ": "Benin","BM": "Bermuda","BT": "Bhutan","BO": "Bolivia, Plurinational State of","BQ": "Bonaire, Sint Eustatius and Saba","BA": "Bosnia and Herzegovina","BW": "Botswana","BV": "Bouvet Island","BR": "Brazil","IO": "British Indian Ocean Territory","BN": "Brunei Darussalam","BG": "Bulgaria","BF": "Burkina Faso","BI": "Burundi","KH": "Cambodia","CM": "Cameroon","CA": "Canada","CV": "Cape Verde","KY": "Cayman Islands","CF": "Central African Republic","TD": "Chad","CL": "Chile","CN": "China","CX": "Christmas Island","CC": "Cocos (Keeling) Islands","CO": "Colombia","KM": "Comoros","CG": "Congo","CD": "Congo, the Democratic Republic of the","CK": "Cook Islands","CR": "Costa Rica","CI": "C\u00f4te d'Ivoire","HR": "Croatia","CU": "Cuba","CW": "Cura\u00e7ao","CY": "Cyprus","CZ": "Czech Republic","DK": "Denmark","DJ": "Djibouti","DM": "Dominica","DO": "Dominican Republic","EC": "Ecuador","EG": "Egypt","SV": "El Salvador","GQ": "Equatorial Guinea","ER": "Eritrea","EE": "Estonia","ET": "Ethiopia","FK": "Falkland Islands (Malvinas)","FO": "Faroe Islands","FJ": "Fiji","FI": "Finland","FR": "France","GF": "French Guiana","PF": "French Polynesia","TF": "French Southern Territories","GA": "Gabon","GM": "Gambia","GE": "Georgia","DE": "Germany","GH": "Ghana","GI": "Gibraltar","GR": "Greece","GL": "Greenland","GD": "Grenada","GP": "Guadeloupe","GU": "Guam","GT": "Guatemala","GG": "Guernsey","GN": "Guinea","GW": "Guinea-Bissau","GY": "Guyana","HT": "Haiti","HM": "Heard Island and McDonald Islands","VA": "Holy See (Vatican City State)","HN": "Honduras","HK": "Hong Kong","HU": "Hungary","IS": "Iceland","IN": "India","ID": "Indonesia","IR": "Iran, Islamic Republic of","IQ": "Iraq","IE": "Ireland","IM": "Isle of Man","IL": "Israel","IT": "Italy","JM": "Jamaica","JP": "Japan","JE": "Jersey","JO": "Jordan","KZ": "Kazakhstan","KE": "Kenya","KI": "Kiribati","KP": "Korea, Democratic People's Republic of","KR": "Korea, Republic of","KW": "Kuwait","KG": "Kyrgyzstan","LA": "Lao People's Democratic Republic","LV": "Latvia","LB": "Lebanon","LS": "Lesotho","LR": "Liberia","LY": "Libya","LI": "Liechtenstein","LT": "Lithuania","LU": "Luxembourg","MO": "Macao","MK": "Macedonia, the Former Yugoslav Republic of","MG": "Madagascar","MW": "Malawi","MY": "Malaysia","MV": "Maldives","ML": "Mali","MT": "Malta","MH": "Marshall Islands","MQ": "Martinique","MR": "Mauritania","MU": "Mauritius","YT": "Mayotte","MX": "Mexico","FM": "Micronesia, Federated States of","MD": "Moldova, Republic of","MC": "Monaco","MN": "Mongolia","ME": "Montenegro","MS": "Montserrat","MA": "Morocco","MZ": "Mozambique","MM": "Myanmar","NA": "Namibia","NR": "Nauru","NP": "Nepal","NL": "Netherlands","NC": "New Caledonia","NZ": "New Zealand","NI": "Nicaragua","NE": "Niger","NG": "Nigeria","NU": "Niue","NF": "Norfolk Island","MP": "Northern Mariana Islands","NO": "Norway","OM": "Oman","PK": "Pakistan","PW": "Palau","PS": "Palestine, State of","PA": "Panama","PG": "Papua New Guinea","PY": "Paraguay","PE": "Peru","PH": "Philippines","PN": "Pitcairn","PL": "Poland","PT": "Portugal","PR": "Puerto Rico","QA": "Qatar","RE": "R\u00e9union","RO": "Romania","RU": "Russian Federation","RW": "Rwanda","BL": "Saint Barth\u00e9lemy","SH": "Saint Helena, Ascension and Tristan da Cunha","KN": "Saint Kitts and Nevis","LC": "Saint Lucia","MF": "Saint Martin (French part)","PM": "Saint Pierre and Miquelon","VC": "Saint Vincent and the Grenadines","WS": "Samoa","SM": "San Marino","ST": "Sao Tome and Principe","SA": "Saudi Arabia","SN": "Senegal","RS": "Serbia","SC": "Seychelles","SL": "Sierra Leone","SG": "Singapore","SX": "Sint Maarten (Dutch part)","SK": "Slovakia","SI": "Slovenia","SB": "Solomon Islands","SO": "Somalia","ZA": "South Africa","GS": "South Georgia and the South Sandwich Islands","SS": "South Sudan","ES": "Spain","LK": "Sri Lanka","SD": "Sudan","SR": "Suriname","SJ": "Svalbard and Jan Mayen","SZ": "Swaziland","SE": "Sweden","CH": "Switzerland","SY": "Syrian Arab Republic","TW": "Taiwan, Province of China","TJ": "Tajikistan","TZ": "Tanzania, United Republic of","TH": "Thailand","TL": "Timor-Leste","TG": "Togo","TK": "Tokelau","TO": "Tonga","TT": "Trinidad and Tobago","TN": "Tunisia","TR": "Turkey","TM": "Turkmenistan","TC": "Turks and Caicos Islands","TV": "Tuvalu","UG": "Uganda","UA": "Ukraine","AE": "United Arab Emirates","GB": "United Kingdom","US": "United States","UM": "United States Minor Outlying Islands","UY": "Uruguay","UZ": "Uzbekistan","VU": "Vanuatu","VE": "Venezuela, Bolivarian Republic of","VN": "Viet Nam","VG": "Virgin Islands, British","VI": "Virgin Islands, U.S.","WF": "Wallis and Futuna","EH": "Western Sahara","YE": "Yemen","ZM": "Zambia","ZW": "Zimbabwe"}
 
 // Load language files
@@ -148,7 +152,7 @@ socket.on('getCookies', function(jar){
 // After Login
 socket.on("login", function (data) {
 	if (!data.error) {
-		$("#modal_settings_username").html(data.user.name)
+		$("#modal_settings_username").text(data.user.name)
 		$("#modal_settings_picture").attr("src",data.user.picture)
 		$("#side_user").text(data.user.name)
 		$("#side_avatar").attr("src",data.user.picture)
@@ -161,6 +165,7 @@ socket.on("login", function (data) {
 			$('#logged_in_info').removeClass('hide')
 			$('#login_email_btn_container').addClass('hide')
 			$('#modal_login').modal("close")
+			$('#modal_login_input_password').val("")
 			M.toast({html: '<i class="material-icons left">check</i>'+i18n("Logged in successfully"), displayLength: 5000, classes: 'rounded'})
 			loggedIn = true;
 		}
@@ -173,6 +178,9 @@ socket.on("login", function (data) {
 		M.toast({html: '<i class="material-icons left">error</i>'+data.error, displayLength: 5000, classes: 'rounded'})
 		$('#modal_login_input_password').val("")
 		$('#modal_login_input_userToken').val("")
+		if (localStorage.getItem("autologin")){
+			localStorage.removeItem("autologin")
+		}
 		loggedIn = false;
 	}
 	$('#modal_login_btn_login').attr("disabled", false)
@@ -188,12 +196,9 @@ function checkAutologin(){
 			socket.emit('autologin', localStorage.getItem('autologin'), localStorage.getItem('autologin_email'))
 			$('#modal_login_btn_login').attr("disabled", true)
 			$('#modal_login_btn_login').html(i18n("Logging in..."))
-			if (serverMode){
-				$('#modal_login_input_userToken').val(localStorage.getItem('userToken'))
-			}else{
-				$('#modal_login_input_username').val(localStorage.getItem('autologin_email'))
-				$('#modal_login_input_password').val("password")
-			}
+			$('#modal_login_input_userToken').val(localStorage.getItem('userToken'))
+			$('#modal_login_input_username').val(localStorage.getItem('autologin_email'))
+			$('#modal_login_input_password').val("password")
 			M.updateTextFields()
 		}else{
 			socket.emit('init')
@@ -247,12 +252,48 @@ $(document).ready(function () {
 	$("main.container").css('display', 'block')
 	M.AutoInit()
 	preview_track.volume = 0
+	preview_max_volume = parseFloat(localStorage.getItem("previewVolume"))
+	if (preview_max_volume === null){
+		preview_max_volume = 0.8
+		localStorage.setItem("previewVolume", preview_max_volume)
+	}
+	$('#modal_settings_range_previewVolume').val(preview_max_volume * 100)
 	var tabs = M.Tabs.getInstance(document.getElementById("tab-nav"))
 	$('.modal').modal()
 	socket.emit("getUserSettings")
 	$("main.container").addClass('animated fadeIn').on('webkitAnimationEnd', function () {
 		$(this).removeClass('animated fadeOut')
 	})
+
+	// Continuous scrolling search
+	$(window).scroll(function () {
+    if ($(document).height() <= $(window).scrollTop() + $(window).height()) {
+      if (tabs.index == 0 && !searchCapped){
+				currentIndex +=1;
+				searchString = currentSearch
+				var mode = $('#tab_search_form_search').find('input[name=searchMode]:checked').val()
+
+				if (searchString.length == 0) {return}
+				$('#tab_search_table_results_tbody_loadingIndicator').removeClass('hide')
+				console.log(currentIndex)
+				socket.emit("search", {type: mode, text: searchString, index: currentIndex*25})
+			}
+    }
+  });
+
+	// Change Preview Volume
+	$('#modal_settings_range_previewVolume').on('change',function(event){
+		preview_max_volume = $(this).val() / 100
+		localStorage.setItem("previewVolume", preview_max_volume)
+	})
+
+	// Illegal character settings
+	$("#modal_settings_input_illegalCharacterReplacer").keypress( function(e) {
+		const regex = RegExp('[\0\/\\:*?"<>|]');
+		if (regex.test(e.key) && e.key != 'backspace') {
+				e.preventDefault();
+		}
+	});
 
 	// Load top charts list for countries
 	if (localStorage.getItem('chartsCountry') == null)
@@ -309,20 +350,21 @@ $(document).ready(function () {
 	$(preview_track).on('canplay', ()=>{
 		preview_track.play()
 		preview_stopped = false
-		$(preview_track).animate({volume: 1}, 500)
+		$(preview_track).animate({volume: preview_max_volume}, 500)
 	})
 
 	$(preview_track).on('timeupdate', ()=>{
 		if (preview_track.currentTime > preview_track.duration-1){
 			$(preview_track).animate({volume: 0}, 800)
 			preview_stopped = true
+			$('a[playing] > .preview_controls').css({opacity:0})
 			$("*").removeAttr("playing")
 			$('.preview_controls').text("play_arrow")
 			$('.preview_playlist_controls').text("play_arrow")
 		}
 	})
 
-	$('#modal_trackList, #modal_trackListSelective').modal({
+	$('#modal_artist, #modal_trackListSelective').modal({
 		onCloseStart: ()=>{
 			if ($('.preview_playlist_controls').filter(function(){return $(this).attr("playing")}).length > 0){
 				$(preview_track).animate({volume: 0}, 800)
@@ -496,6 +538,7 @@ $('#modal_settings_btn_saveSettings').click(function () {
 		saveFullArtists : $('#modal_settings_cbox_saveFullArtists').is(':checked'),
 		padtrck: $('#modal_settings_cbox_padtrck').is(':checked'),
 		paddingSize: $('#modal_settings_number_paddingSize').val(),
+		illegalCharacterReplacer: $('#modal_settings_input_illegalCharacterReplacer').val(),
 		queueConcurrency: parseInt($('#modal_settings_number_queueConcurrency').val()),
 		maxBitrate: $('#modal_settings_select_maxBitrate').val(),
 		fallbackBitrate : $('#modal_settings_cbox_fallbackBitrate').is(':checked'),
@@ -519,6 +562,7 @@ $('#modal_settings_btn_saveSettings').click(function () {
 		dateFormatYear: $('#modal_settings_select_dateFormatYear').val(),
 		savePlaylistAsCompilation: $('#modal_settings_cbox_savePlaylistAsCompilation').is(':checked'),
 		removeAlbumVersion : $('#modal_settings_cbox_removeAlbumVersion').is(':checked'),
+		useNullSeparator : $('#modal_settings_cbox_useNullSeparator').is(':checked'),
 		saveID3v1 : $('#modal_settings_cbox_saveID3v1').is(':checked'),
 		titleCasing : $('#modal_settings_select_titleCasing').val(),
 		artistCasing : $('#modal_settings_select_artistCasing').val(),
@@ -550,7 +594,7 @@ $('#modal_settings_btn_saveSettings').click(function () {
 			author: $('#modal_tags_author').is(':checked'),
 			writer: $('#modal_tags_writer').is(':checked'),
 			engineer: $('#modal_tags_engineer').is(':checked'),
-			producer: $('#modal_tags_producer').is(':checked')
+			producer: $('#modal_tags_producer').is(':checked'),
 		}
 	}
 	let spotifyUser = $('#modal_settings_input_spotifyUser').val()
@@ -616,6 +660,7 @@ function fillSettingsModal(settings, spotifySettings = {clientId: "", clientSecr
 	$('#modal_settings_cbox_saveFullArtists').prop('checked', settings.saveFullArtists)
 	$('#modal_settings_cbox_padtrck').prop('checked', settings.padtrck)
 	$('#modal_settings_number_paddingSize').val(settings.paddingSize)
+	$('#modal_settings_input_illegalCharacterReplacer').val(settings.illegalCharacterReplacer)
 	$('#modal_settings_number_queueConcurrency').val(settings.queueConcurrency)
 	$('#modal_settings_select_maxBitrate').val(settings.maxBitrate).formSelect()
 	$('#modal_settings_cbox_fallbackBitrate').prop('checked', settings.fallbackBitrate)
@@ -650,6 +695,7 @@ function fillSettingsModal(settings, spotifySettings = {clientId: "", clientSecr
 	$('#modal_settings_select_dateFormatYear').val(settings.dateFormatYear).formSelect()
 	$('#modal_settings_cbox_savePlaylistAsCompilation').prop('checked', settings.savePlaylistAsCompilation)
 	$('#modal_settings_cbox_removeAlbumVersion').prop('checked', settings.removeAlbumVersion)
+	$('#modal_settings_cbox_useNullSeparator').prop('checked', settings.useNullSeparator)
 	$('#modal_settings_cbox_saveID3v1').prop('checked', settings.saveID3v1)
 	$('#modal_settings_select_titleCasing').val(settings.titleCasing).formSelect()
 	$('#modal_settings_select_artistCasing').val(settings.artistCasing).formSelect()
@@ -694,7 +740,7 @@ function fillSettingsModal(settings, spotifySettings = {clientId: "", clientSecr
 
 //#############################################MODAL_MSG##############################################\\
 function message(title, message) {
-	$('#modal_msg_title').html(title)
+	$('#modal_msg_title').text(title)
 	$('#modal_msg_message').html(message)
 	$('#modal_msg').modal('open')
 }
@@ -708,9 +754,12 @@ function message(title, message) {
 // Submit Search Form
 $('#tab_search_form_search').submit(function (ev) {
 	ev.preventDefault()
+	currentIndex = 0
+	searchCapped = false
 	var searchString = $('#tab_search_form_search_input_searchString').val().trim()
 	if (searchString.indexOf('deezer.com/') < 0 && searchString.indexOf('open.spotify.com/') < 0 && searchString.indexOf('spotify:') < 0) {
 		var mode = $('#tab_search_form_search').find('input[name=searchMode]:checked').val()
+		currentSearch = searchString
 
 		if (searchString.length == 0) {return}
 
@@ -720,8 +769,9 @@ $('#tab_search_form_search').submit(function (ev) {
 		$('#tab_search_table_results_tbody_noResults').addClass('hide')
 		$('#tab_search_table_results_tbody_loadingIndicator').removeClass('hide')
 
-		socket.emit("search", {type: mode, text: searchString})
+		socket.emit("search", {type: mode, text: searchString, index: 0})
 	}else{
+		currentSearch = ""
 		parseDownloadFromURL($('#tab_search_form_search_input_searchString').val().trim())
 	}
 })
@@ -763,26 +813,27 @@ socket.on('search', function (data) {
 
 	// If no data, display No Results Found
 	if (data.items.length == 0) {
-		$('#tab_search_table_results_tbody_noResults').removeClass('hide')
+		if (!data.update) $('#tab_search_table_results_tbody_noResults').removeClass('hide')
+		searchCapped = true
 		return
 	}
 
 	// Populate table and show results
 	if (data.type == 'track') {
-		showResults_table_track(data.items)
+		showResults_table_track(data.items, data.update)
 	} else if (data.type == 'album') {
-		showResults_table_album(data.items)
+		showResults_table_album(data.items, data.update)
 	} else if (data.type == 'artist') {
-		showResults_table_artist(data.items)
+		showResults_table_artist(data.items, data.update)
 	} else if (data.type == 'playlist') {
-		showResults_table_playlist(data.items)
+		showResults_table_playlist(data.items, data.update)
 	}
 	$('#tab_search_table_results_tbody_results').removeClass('hide')
 })
 
-function showResults_table_track(tracks) {
+function showResults_table_track(tracks, update) {
 	var tableBody = $('#tab_search_table_results_tbody_results')
-	$(tableBody).html('')
+	if (!update) $(tableBody).html('')
 	$('#tab_search_table_results_thead_track').removeClass('hide')
 	for (var i = 0; i < tracks.length; i++) {
 		var currentResultTrack = tracks[i]
@@ -804,7 +855,7 @@ function showResults_table_track(tracks) {
 		addPreviewControlsClick(tableBody.children('tr:last').find('.single-cover'))
 		tableBody.children('tr:last').find('.resultArtist').click(function (ev){
 			ev.preventDefault()
-			showTrackList($(this).data("link"))
+			showArtistModal($(this).data("link"))
 		})
 		tableBody.children('tr:last').find('.resultAlbum').click(function (ev){
 			ev.preventDefault()
@@ -813,9 +864,9 @@ function showResults_table_track(tracks) {
 	}
 }
 
-function showResults_table_album(albums) {
+function showResults_table_album(albums, update) {
 	var tableBody = $('#tab_search_table_results_tbody_results')
-	$(tableBody).html('')
+	if (!update) $(tableBody).html('')
 	$('#tab_search_table_results_thead_album').removeClass('hide')
 	for (var i = 0; i < albums.length; i++) {
 		var currentResultAlbum = albums[i]
@@ -836,15 +887,15 @@ function showResults_table_album(albums) {
 		generateDownloadLink(currentResultAlbum.link).appendTo(tableBody.children('tr:last')).wrap('<td>')
 		tableBody.children('tr:last').find('.resultArtist').click(function (ev){
 			ev.preventDefault()
-			showTrackList($(this).data("link"))
+			showArtistModal($(this).data("link"))
 		})
 	}
 	$('.tooltipped').tooltip({delay: 100})
 }
 
-function showResults_table_artist(artists) {
+function showResults_table_artist(artists, update) {
 	var tableBody = $('#tab_search_table_results_tbody_results')
-	$(tableBody).html('')
+	if (!update) $(tableBody).html('')
 	$('#tab_search_table_results_thead_artist').removeClass('hide')
 	for (var i = 0; i < artists.length; i++) {
 		var currentResultArtist = artists[i]
@@ -854,14 +905,14 @@ function showResults_table_artist(artists) {
 				<td class="breakline">${currentResultArtist.name}</td>
 				<td>${currentResultArtist.nb_album}</td>
 				</tr>`)
-		generateShowTracklistButton(currentResultArtist.link).appendTo(tableBody.children('tr:last')).wrap('<td>')
+		generateShowArtistButton(currentResultArtist.link).appendTo(tableBody.children('tr:last')).wrap('<td>')
 		generateDownloadLink(currentResultArtist.link).appendTo(tableBody.children('tr:last')).wrap('<td>')
 	}
 }
 
-function showResults_table_playlist(playlists) {
+function showResults_table_playlist(playlists, update) {
 	var tableBody = $('#tab_search_table_results_tbody_results')
-	$(tableBody).html('')
+	if (!update) $(tableBody).html('')
 	$('#tab_search_table_results_thead_playlist').removeClass('hide')
 	for (var i = 0; i < playlists.length; i++) {
 		var currentResultPlaylist = playlists[i]
@@ -894,18 +945,69 @@ var trackListSelectiveModalApp = new Vue({
 	}
 })
 
-var trackListModalApp = new Vue({
-	el: '#modal_trackList',
+var artistModalApp = new Vue({
+	el: '#modal_artist',
 	data: {
+		currentTab: '',
+		sortKey: 'release_date',
+		sortOrder: 'desc',
 		title: "",
-		metadata : {},
-		release_date: "",
-		label: "",
 		image: "",
 		type: "",
 		link: "",
 		head: null,
-		body: []
+		body: null
+	},
+	methods: {
+		downloadClick : function(url, e){
+	    if (e) e.preventDefault();
+	    addToQueue(url)
+		},
+		downloadRClick: function(url, e){
+	    if (e) e.preventDefault();
+			$(modalQuality).data("url", url)
+			$(modalQuality).css('display', 'block')
+			$(modalQuality).addClass('animated fadeIn')
+	    return false;
+		},
+		moreInfo: function(url, e){
+			if (e) e.preventDefault();
+			showTrackListSelective(url, true)
+		},
+		sortBy: function(key) {
+      if (key == this.sortKey) {
+				this.sortOrder = (this.sortOrder == 'asc') ? 'desc' : 'asc';
+      } else {
+				this.sortKey = key;
+				this.sortOrder = 'asc';
+      }
+		},
+		changeTab: function(tab){
+			this.currentTab = tab
+		},
+		checkNewRelease: function(date){
+			var g1 = new Date();
+    	var g2 = new Date(date);
+			g2.setDate(g2.getDate()+3)
+			g1.setHours(0,0,0,0)
+			if (g1.getTime() <= g2.getTime()){
+				return true;
+			}else {
+				return false;
+			}
+		}
+	},
+	updated: function(){
+		this.$nextTick(function () {
+			if (this.body != {}){
+				M.Tabs.init(document.getElementById("artist-tabs"));
+			}
+	  })
+	},
+	computed: {
+		showTable() {
+			return _.orderBy(this.body[this.currentTab], this.sortKey, this.sortOrder)
+		}
 	}
 })
 
@@ -965,27 +1067,30 @@ $('#download_track_selection').on('contextmenu', function(e){
 })
 
 // Generate Button for tracklist without selection
-function generateShowTracklistButton(link) {
+function generateShowArtistButton(link) {
 	var btn_showTrackList = $('<button class="waves-effect btn-flat"><i class="material-icons">list</i></button>')
 	$(btn_showTrackList).click(function (ev) {
 		ev.preventDefault()
-		showTrackList(link)
+		showArtistModal(link)
 	})
 	return btn_showTrackList
 }
 
-function showTrackList(link) {
-	$('#modal_trackList_table_trackList_tbody_trackList').addClass('hide')
-	$('#modal_trackList_table_trackList_tbody_loadingIndicator').removeClass('hide')
-	trackListModalApp.title = i18n("Loading...")
-	trackListModalApp.image = ""
-	trackListModalApp.metadata = ""
-	trackListModalApp.release_date = ""
-	trackListModalApp.type = ""
-	trackListModalApp.head = []
-	trackListModalApp.body = []
-	$('#modal_trackList').modal('open')
-	let type = getTypeFromLink(link)
+function showArtistModal(link) {
+	$('#modal_artist_table_trackList_tbody_trackList').addClass('hide')
+	$('#modal_artist_table_trackList_tbody_noResults').addClass('hide')
+	$('#modal_artist_table_trackList_tbody_loadingIndicator').removeClass('hide')
+	artistModalApp.title = i18n("Loading...")
+	artistModalApp.image = ""
+	artistModalApp.type = ""
+	artistModalApp.currentTab = ''
+	artistModalApp.sortKey = 'release_date'
+	artistModalApp.sortOrder = 'desc'
+	artistModalApp.link = link
+	artistModalApp.head = []
+	artistModalApp.body = null
+	$('#modal_artist').modal('open')
+	let type = "artist"
 	let id = getIDFromLink(link, type)
 	socket.emit('getTrackList', {id: id, type: type})
 }
@@ -1008,43 +1113,32 @@ socket.on("getTrackList", function (data) {
 		}
 
 		// ########################################
-		if(data.reqType == 'album' || data.reqType == 'playlist' || data.reqType == 'spotifyplaylist'){
-			var tableBody = $('#modal_trackListSelective_table_trackListSelective_tbody_trackListSelective')
-		} else {
-			var tableBody = $('#modal_trackList_table_trackList_tbody_trackList')
+		var tableBody = null
+		if(data.reqType != 'artist'){
+			tableBody = $('#modal_trackListSelective_table_trackListSelective_tbody_trackListSelective')
+			$(tableBody).html('')
 		}
-		$(tableBody).html('')
 		//############################################
 		if (data.reqType == 'artist') {
-			trackListModalApp.title = data.response.name
-			trackListModalApp.image = data.response.picture_xl
-			trackListModalApp.type = i18n(data.reqType[0].toUpperCase() + data.reqType.substring(1))
-			trackListModalApp.link = `https://www.deezer.com/${data.reqType}/${data.id}`
-			trackListModalApp.head = [
+			artistModalApp.title = data.response.name
+			artistModalApp.image = data.response.picture_xl
+			artistModalApp.type = "Artist"
+			artistModalApp.link = `https://www.deezer.com/${data.reqType}/${data.id}`
+			artistModalApp.currentTab = Object.keys(trackList)[0]
+			artistModalApp.sortKey = 'release_date'
+			artistModalApp.sortOrder = 'desc'
+			artistModalApp.head = [
 				{title: '', smallonly:true},
-				{title: i18n('Album Title'), hideonsmall:true},
-				{title: i18n('Release Date'), hideonsmall:true},
-				{title: i18n('Record Type'), hideonsmall:true},
+				{title: i18n('Title'), hideonsmall:true, sortKey: "title"},
+				{title: i18n('Release Date'), hideonsmall:true, sortKey: "release_date"},
 				{title: '', width: "56px"}
 			]
-			for (var i = 0; i < trackList.length; i++) {
-				$(tableBody).append(
-					`<tr>
-					<td class="hide-on-med-and-up">
-						<a href="#" class="album_chip" data-link="${trackList[i].link}"><div class="chip"><img src="${trackList[i].cover_small}"/>${(trackList[i].explicit_lyrics ? `<i class="material-icons valignicon tiny materialize-red-text tooltipped" data-tooltip="${i18n("Explicit")}">explicit</i> ` : '')}${trackList[i].title}</div></a>
-						<p class="remove-margin secondary-text">${trackList[i].record_type[0].toUpperCase() + trackList[i].record_type.substring(1)} • ${trackList[i].release_date}</p>
-					</td>
-					<td class="hide-on-small-only breakline"><a href="#" class="album_chip" data-link="${trackList[i].link}"><div class="chip"><img src="${trackList[i].cover_small}"/>${(trackList[i].explicit_lyrics ? `<i class="material-icons valignicon tiny materialize-red-text tooltipped" data-tooltip="${i18n("Explicit")}">explicit</i> ` : '')}${trackList[i].title}</div></a></td>
-					<td class="hide-on-small-only">${trackList[i].release_date}</td>
-					<td class="hide-on-small-only">${trackList[i].record_type[0].toUpperCase() + trackList[i].record_type.substring(1)}</td>
-					</tr>`
-				)
-				generateDownloadLink(trackList[i].link).appendTo(tableBody.children('tr:last')).wrap('<td>')
+			if (_.isEmpty(trackList)){
+				artistModalApp.body = null
+				$('#modal_artist_table_trackList_tbody_noResults').removeClass('hide')
+			}else{
+				artistModalApp.body = trackList
 			}
-			$('.album_chip').click(function(e){
-				e.preventDefault();
-				showTrackListSelective($(this).data('link'), true)
-			})
 		} else if(data.reqType == 'playlist') {
 			trackListSelectiveModalApp.type = i18n(data.reqType[0].toUpperCase() + data.reqType.substring(1))
 			trackListSelectiveModalApp.link = `https://www.deezer.com/${data.reqType}/${data.id}`
@@ -1089,7 +1183,7 @@ socket.on("getTrackList", function (data) {
 				addPreviewControlsClick(tableBody.children('tr:last').find('.preview_playlist_controls'))
 				tableBody.children('tr:last').find('.resultArtist').click(function (ev){
 					ev.preventDefault()
-					showTrackList($(this).data("link"))
+					showArtistModal($(this).data("link"))
 				})
 				tableBody.children('tr:last').find('.resultAlbum').click(function (ev){
 					ev.preventDefault()
@@ -1195,9 +1289,9 @@ socket.on("getTrackList", function (data) {
 			var [hh,mm,ss] = convertDurationSeparated(totalDuration)
 			trackListSelectiveModalApp.metadata += `, ${hh>0 ? `${hh} hr` : ""} ${mm} min`
 		} else {
-			trackListModalApp.type = null
-			trackListModalApp.title = 'Tracklist'
-			trackListModalApp.head = [
+			trackListSelectiveModalApp.type = null
+			trackListSelectiveModalApp.title = 'Tracklist'
+			trackListSelectiveModalApp.head = [
 				{title: '<i class="material-icons">music_note</i>'},
 				{title: '#'},
 				{title: 'Song'},
@@ -1217,14 +1311,12 @@ socket.on("getTrackList", function (data) {
 				addPreviewControlsClick(tableBody.children('tr:last').find('.preview_playlist_controls'))
 			}
 		}
-		if(data.reqType == 'album' || data.reqType == 'playlist' || data.reqType == 'spotifyplaylist'){
+		if(data.reqType == 'artist'){
+			$('#modal_artist_table_trackList_tbody_loadingIndicator').addClass('hide')
+		} else {
 			$('#modal_trackListSelective_table_trackListSelective_tbody_loadingIndicator').addClass('hide')
 			$('#modal_trackListSelective_table_trackListSelective_tbody_trackListSelective').removeClass('hide')
-		} else {
-			$('#modal_trackList_table_trackList_tbody_loadingIndicator').addClass('hide')
-			$('#modal_trackList_table_trackList_tbody_trackList').removeClass('hide')
 		}
-		//$('#modal_trackList_table_trackList_tbody_trackList').html(content)
 	}
 })
 
@@ -1277,7 +1369,7 @@ socket.on("getChartsTrackListByCountry", function (data) {
 		addPreviewControlsClick(chartsTableBody.children('tr:last').find('.single-cover'))
 		chartsTableBody.children('tr:last').find('.resultArtist').click(function (ev){
 			ev.preventDefault()
-			showTrackList($(this).data("link"))
+			showArtistModal($(this).data("link"))
 		})
 		chartsTableBody.children('tr:last').find('.resultAlbum').click(function (ev){
 			ev.preventDefault()
@@ -1296,7 +1388,7 @@ socket.on("getMyPlaylistList", function (data) {
 		var currentResultPlaylist = data.playlists[i]
 		$(tableBody).append(
 				`<tr>
-				<td><img src="${currentResultPlaylist.image}" class="rounded" width="56px" /></td>
+				<td><img src="${currentResultPlaylist.image || "/img/noCover.jpg"}" class="rounded" width="56px" /></td>
 				<td>${currentResultPlaylist.title}</td>
 				<td>${currentResultPlaylist.songs}</td>
 				</tr>`)
@@ -1316,7 +1408,7 @@ var linkAnalyzerSong = new Vue({
 	},
 	methods:{
 		showArtist: function(){
-			showTrackList(this.d.artist.link)
+			showArtistModal(this.d.artist.link)
 		},
 		showAlbum: function(){
 			showTrackListSelective(`https://www.deezer.com/album/${this.d.album.id}`)
@@ -1331,7 +1423,7 @@ var linkAnalyzerAlbum = new Vue({
 	},
 	methods:{
 		showArtist: function(){
-			showTrackList(`https://www.deezer.com/artist/${this.d.artist.id}`)
+			showArtistModal(`https://www.deezer.com/artist/${this.d.artist.id}`)
 		}
 	}
 })
@@ -1495,8 +1587,8 @@ socket.on('updateQueue', function (data) {
 		return
 	}
 
-	$('#' + data.queueId).find('.queueDownloaded').html(data.downloaded + data.failed)
-	$('#' + data.queueId).find('.queueFailed').html(data.failed)
+	$('#' + data.queueId).find('.queueDownloaded').text(data.downloaded + data.failed)
+	$('#' + data.queueId).find('.queueFailed').text(data.failed)
 
 	if (data.failed == 0 && ((data.downloaded + data.failed) >= data.size)) {
 		$('#' + data.queueId).find('.eventBtn').html('<i class="material-icons">done</i>')
@@ -1705,7 +1797,7 @@ function addPreviewControlsClick(el){
 				preview_track.play()
 				preview_stopped = false
 				icon.text("pause")
-				$(preview_track).animate({volume: 1}, 500)
+				$(preview_track).animate({volume: preview_max_volume}, 500)
 			}else{
 				preview_stopped = true
 				icon.text("play_arrow")

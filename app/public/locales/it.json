@@ -242,5 +242,13 @@
 	"Start Case": "Prima Lettera Maiuscola",
 	"Sentence case": "Come una frase",
 	"Case for Title": "Capitalizzazione Titoli",
-	"Case for Artist": "Capitalizzazione Artisti"
+	"Case for Artist": "Capitalizzazione Artisti",
+	"Default": "Default",
+	"& and feat.": "& e feat.",
+	"Artist Tag Format": "Formato Tag Artista",
+	"Add featured artists to trackname": "Aggiungi i feat nel nome del brano",
+	"Use Null Separator in MP3s": "Usa il Null Separator negli MP3",
+	"Preview Volume": "Volume anteprima brani",
+	"Illegal character replacer": "Sostituisci i caratteri illegali con...",
+	"Create album folders for single tracks": "Crea la cartella dell'album anche per i singoli"
 }

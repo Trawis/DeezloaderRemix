@@ -26,7 +26,7 @@
 	<meta charset="utf-8"/>
 </head>
 <body>
-<span id="appVersionFallback" hidden>4.3.0</span>
+<span id="appVersionFallback" hidden>4.4.0</span>
 
 <div id="title-bar" class="deezloader-black">
 	<div class="resize-padding" style="width: 100%; height: 3px;"></div>
@@ -107,7 +107,7 @@
 			<div class="input-field col s12">
 				<input autocomplete="off" type="text" id="modal_settings_input_trackNameTemplate"/>
 				<label for="modal_settings_input_trackNameTemplate"><%= __('Tracknames template')%> <i class="material-icons valignicon tiny tooltipped" data-position="right" data-delay="50"
-					data-tooltip="<%= __('Supported variables are')%>: %title%, %album%, %artist%, %year%, %date%, %label%, %number%, %disc%, %isrc%, %explicit%, %genre%, %track_id%, %album_id%">info_outline</i></label>
+					data-tooltip="<%= __('Supported variables are')%>: %title%, %album%, %artist%, %year%, %date%, %label%, %number%, %disc%, %isrc%, %explicit%, %genre%, %track_id%, %album_id%, %artist_id%">info_outline</i></label>
 			</div>
 		</div>
 
@@ -115,7 +115,7 @@
 			<div class="input-field col s12">
 				<input autocomplete="off" type="text" id="modal_settings_input_albumTrackNameTemplate"/>
 				<label for="modal_settings_input_albumTrackNameTemplate"><%= __('Album tracknames template')%> <i class="material-icons valignicon tiny tooltipped" data-position="right" data-delay="50"
-					data-tooltip="<%= __('Supported variables are')%>: %title%, %album%, %artist%, %year%, %date%, %label%, %number%, %disc%, %isrc%, %explicit%, %genre%, %track_id%, %album_id%">info_outline</i></label>
+					data-tooltip="<%= __('Supported variables are')%>: %title%, %album%, %artist%, %year%, %date%, %label%, %number%, %disc%, %isrc%, %explicit%, %genre%, %track_id%, %album_id%, %artist_id%">info_outline</i></label>
 			</div>
 		</div>
 
@@ -123,7 +123,7 @@
 			<div class="input-field col s12">
 				<input autocomplete="off" type="text" id="modal_settings_input_playlistTrackNameTemplate"/>
 				<label for="modal_settings_input_playlistTrackNameTemplate"><%= __('Playlist tracknames template')%> <i class="material-icons valignicon tiny tooltipped" data-position="right" data-delay="50"
-					data-tooltip="<%= __('Supported variables are')%>: %title%, %album%, %artist%, %year%, %date%, %label%, %number%, %position%, %disc%, %isrc%, %explicit%, %genre%, %track_id%, %album_id%, %playlist_id%">info_outline</i></label>
+					data-tooltip="<%= __('Supported variables are')%>: %title%, %album%, %artist%, %year%, %date%, %label%, %number%, %position%, %disc%, %isrc%, %explicit%, %genre%, %track_id%, %album_id%, %playlist_id%, %artist_id%">info_outline</i></label>
 			</div>
 		</div>
 
@@ -139,7 +139,7 @@
 			<div class="input-field col s12">
 				<input autocomplete="off" type="text" id="modal_settings_input_playlistNameTemplate"/>
 				<label for="modal_settings_input_playlistNameTemplate"><%= __('Playlist names template')%> <i class="material-icons valignicon tiny tooltipped" data-position="right" data-delay="50"
-					data-tooltip="<%= __('Supported variables are')%>: %owner%, %name%, %year%, %date%, %playlist_id%">info_outline</i></label>
+					data-tooltip="<%= __('Supported variables are')%>: %owner%, %owner_id%, %name%, %year%, %date%, %playlist_id%">info_outline</i></label>
 			</div>
 			<div class="col s12 switch settings_switch">
 				<span><%= __('Create folders for Artists')%></span>
@@ -163,7 +163,7 @@
 			<div class="input-field col s12">
 				<input autocomplete="off" type="text" id="modal_settings_input_albumNameTemplate"/>
 				<label for="modal_settings_input_albumNameTemplate"><%= __('Album names template')%> <i class="material-icons valignicon tiny tooltipped" data-position="right" data-delay="50"
-					data-tooltip="<%= __('Supported variables are')%>: %album%, %artist%, %year%, %date%, %bitrate%, %type%, %label%, %album_id%, %upc%, %explicit%, %genre%">info_outline</i></label>
+					data-tooltip="<%= __('Supported variables are')%>: %album%, %artist%, %year%, %date%, %bitrate%, %type%, %label%, %album_id%, %artist_id%, %upc%, %explicit%, %genre%">info_outline</i></label>
 			</div>
 			<div class="col s12 switch settings_switch">
 				<span><%= __('Create folders for CDs')%></span>
@@ -180,7 +180,7 @@
 				</label>
 			</div>
 			<div class="col s12 switch settings_switch">
-				<span><%= __('Save single tracks in a folder')%></span>
+				<span><%= __('Create album folders for single tracks')%></span>
 				<label>
 					<input type="checkbox" id="modal_settings_cbox_createSingleFolder" class="filled-in"/>
 					<span class="lever"></span>
@@ -201,9 +201,13 @@
 					<span class="lever"></span>
 				</label>
 			</div>
-			<div class="input-field col s12">
+			<div class="input-field col s12 m6">
 				<input autocomplete="off" type="number" id="modal_settings_number_paddingSize" min="0"/>
 				<label for="modal_settings_number_paddingSize"><%= __('Overwrite padding size')%></label>
+			</div>
+			<div class="input-field col s12 m6">
+				<input autocomplete="off" type="text" id="modal_settings_input_illegalCharacterReplacer" min="0"/>
+				<label for="modal_settings_input_illegalCharacterReplacer"><%= __('Illegal character replacer')%></label>
 			</div>
 		</div>
 
@@ -235,11 +239,16 @@
 					<option value="ko">한국어</option>
 					<option value="pt-BR">Português do Brasil</option>
 					<option value="ru">Русский</option>
+					<option value="id">bahasa Indonesia</option>
 					<option value="th">ภาษาไทย</option>
 					<option value="tr">Türkçe</option>
 					<option value="uwu">engwish uwu</option>
 				</select>
 				<label for="modal_settings_select_lang"><%= __('Language')%></label>
+			</div>
+			<div class="range-field col s12 m6">
+				<label for="modal_settings_range_previewVolume"><%= __('Preview Volume')%></label>
+		    <input type="range" min="0" max="100" id="modal_settings_range_previewVolume"/>
 			</div>
 			<div class="col s12 switch settings_switch">
 				<span><%= __('Fallback to lower bitrates if preferred is not available')%></span>
@@ -310,7 +319,7 @@
 		<div class="row">
 			<div class="input-field col s12 m6">
 				<select name="embeddedArtworkSize" id="modal_settings_select_embeddedArtworkSize">
-					<option value="2000">2000x2000</option>
+					<option value="1800">1800x1800</option>
 					<option value="1400">1400x1400</option>
 					<option value="1200">1200x1200</option>
 					<option value="1000">1000x1000</option>
@@ -322,7 +331,7 @@
 			</div>
 			<div class="input-field col s12 m6">
 				<select name="localArtworkSize" id="modal_settings_select_localArtworkSize">
-					<option value="2000">2000x2000</option>
+					<option value="1800">1800x1800</option>
 					<option value="1400">1400x1400</option>
 					<option value="1200">1200x1200</option>
 					<option value="1000">1000x1000</option>
@@ -342,7 +351,7 @@
 			<div class="input-field col s12">
 				<input autocomplete="off" type="text" id="modal_settings_input_coverImageTemplate"/>
 				<label for="modal_settings_input_albumTrackNameTemplate"><%= __('Album Artwork Name Template')%> <i class="material-icons valignicon tiny tooltipped" data-position="right" data-delay="50"
-					data-tooltip="<%= __('Supported variables are')%>: %album%, %artist%, %year%, %date%, %bitrate%, %type%, %label%, %album_id%, %upc%, %explicit%, %genre%">info_outline</i></label>
+					data-tooltip="<%= __('Supported variables are')%>: %album%, %artist%, %year%, %date%, %bitrate%, %type%, %label%, %album_id%, %artist_id%, %upc%, %explicit%, %genre%">info_outline</i></label>
 			</div>
 			<div class="col s12 switch settings_switch">
 				<span><%= __('Save Artist Artwork')%></span>
@@ -369,7 +378,9 @@
 		<div class="row">
 			<div class="input-field col s12">
 				<select name="multitagSeparator" id="modal_settings_select_multitagSeparator">
-					<option value="null"><%= __('Null Character')%></option>
+					<option value="default"><%= __('Default')%></option>
+					<option value="andFeat"><%= __('& and feat.')%></option>
+					<option value=" & ">& <%= __('with space')%></option>
 					<option value=",">,</option>
 					<option value=", ">, <%= __('with space')%></option>
 					<option value="/">/</option>
@@ -377,7 +388,7 @@
 					<option value=";">;</option>
 					<option value="; ">; <%= __('with space')%></option>
 				</select>
-				<label for="modal_settings_select_multitagSeparator"><%= __('Multitag Separator')%></label>
+				<label for="modal_settings_select_multitagSeparator"><%= __('Artist Tag Format')%></label>
 			</div>
 			<div class="input-field col s12 m6">
 				<select name="dateFormat" id="modal_settings_select_dateFormat">
@@ -407,6 +418,13 @@
 				<span><%= __('Remove \"(Album Version)\" from tracknames')%></span>
 				<label>
 					<input type="checkbox" id="modal_settings_cbox_removeAlbumVersion" class="filled-in"/>
+					<span class="lever"></span>
+				</label>
+			</div>
+			<div class="col s12 switch settings_switch">
+				<span><%= __('Use Null Separator in MP3s')%></span>
+				<label>
+					<input type="checkbox" id="modal_settings_cbox_useNullSeparator" class="filled-in"/>
 					<span class="lever"></span>
 				</label>
 			</div>
@@ -674,7 +692,7 @@
 							<b><%= __('Interface')%>:</b> <a href="http://materializecss.com/" target="_blank">Materialize CSS</a><br/>
 							<br/>
 							<b><%= __('Telegram Contacts')%></b><br/>
-							<b><a href="https://t.me/RemixDevs" target="_blank"><%= __('News Channel')%></a></b><br/>
+							<b><a href="https://t.me/RemixDevNews" target="_blank"><%= __('News Channel')%></a></b><br/>
 							<b><a href="https://t.me/DeezloaderRemixBeta" target="_blank"><%= __('Betas Channel')%></a></b><br/>
 							<b><a href="https://t.me/DeezloaderRemix" target="_blank"><%= __('Stable Releases Channel')%></a></b><br/>
 							<br>
@@ -718,12 +736,7 @@
 					<div class="collapsible-header waves-effect"><i class="material-icons">group</i><%= __('Contacts')%></div>
 					<div class="collapsible-body">
 						<p>
-							<%- __('Contacts_Text')%><br>
-							<ul>
-								<li><a href="https://t.me/DeezloaderItalia">Gruppo in Italiano</a></li>
-								<li><a href="https://t.me/joinchat/Ed1JxEn3_Bx1et6SCeLurg">Grupo en español</a></li>
-								<li><a href="https://t.me/deezloaderpt">Grupo em Português</a></li>
-						</ul>
+							<%- __('Contacts_Text')%>
 						</p>
 					</div>
 				</li>
@@ -737,44 +750,20 @@
 					<div class="collapsible-header waves-effect"><i class="material-icons">history</i><%= __('Changelog')%></div>
 					<div class="collapsible-body">
 						<p>
-							<h5>Version 4.3.0</h5>
-							<h6>Main changes:</h6>
-							&nbsp;&nbsp;+ Loginless download is back!<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ You can still login in the Settings to view your playlists<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Added option to export ARL<br>
-							&nbsp;&nbsp;+ Localization Support<br>
-							&nbsp;&nbsp;+ Merged Download from URL tab into Search tab<br>
-							&nbsp;&nbsp;+ Improved memory usage during downloads (Now you can download Continuous Mixes)<br>
-							&nbsp;&nbsp;+ Updated and improved UI<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Better feedback for errors and warnings<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Toast messages are forced to the bottom<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Made darkmode darker<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Charts are now alphabetically ordered<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Redesigned Download tab<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Made download bars more responsive<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Added PWA metadata for servermode<br>
-							&nbsp;&nbsp;+ Changed folder management structure<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Added create playlist folder option<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;+ Added template names for playlist and artist folder<br>
-							<br>
-							<h6>New Features:</h6>
-							&nbsp;&nbsp;+ Added ID3v1 support<br>
-							&nbsp;&nbsp;+ Divided options for Local and Embedded cover size<br>
-							&nbsp;&nbsp;+ Added 2000x2000 cover option<br>
-							&nbsp;&nbsp;+ Added Case Settings for title and artists<br>
-							&nbsp;&nbsp;+ Added REST API<br>
-							&nbsp;&nbsp;+ Added Select song for Spotify Playlists<br>
-							&nbsp;&nbsp;+ Added support for 360 audio [No way to play them tho]<br>
-							&nbsp;&nbsp;+ Added option to rename the playlist file with the name of the folder<br>
-							<br>
-							<h6>Bugs fixes:</h6>
-							&nbsp;&nbsp;+ Finished implementing Save playlist as Compilation<br>
-							&nbsp;&nbsp;+ Fixed artwork caching<br>
-							&nbsp;&nbsp;+ Fixed issues with autologin not working properly<br>
-							&nbsp;&nbsp;+ Fixed the error 'ENOENT: no such file or directory, mkdir'<br>
-							&nbsp;&nbsp;+ Fixed artist tags being too excessive<br>
-							&nbsp;&nbsp;+ Fixed Explicit Variable on tracknames<br>
-							&nbsp;&nbsp;+ Fixed fallbacks not working properly<br/>
+							<h5>Version 4.4.0</h5>
+							- Fixed FLAC not downloading for some tracks<br>
+							- Fixed some tagging issues<br>
+							- Fixed autologin<br>
+							- Fixed download for albums/playlist with more than 255 songs<br>
+							- Fixed cover not downloading<br>
+							- Fixed XSS "exploit"<br>
+							- Added new badge in artist tab<br>
+							- Added preview volume<br>
+							- Added some new variables to the track and folder names<br>
+							- Added continuous scrolling<br>
+							- Added tab selection in artists<br>
+							- Added table sorting where possible<br>
+							- Added more multitag separators<br>
 							<br/>
 							<a href="https://notabug.org/RemixDevs/DeezloaderRemix/wiki/Changelog" target="_blank"><%= __('Full Changelog Here')%></a>
 						</p>
@@ -811,22 +800,18 @@
 	</div>
 </div>
 
-<!--##########################################MODAL_TRACKLIST###########################################-->
-<div id="modal_trackList" class="modal modal-fixed-footer modal-custom-header">
+<!--##########################################MODAL_ARTIST###########################################-->
+<div id="modal_artist" class="modal modal-fixed-footer modal-custom-header">
 	<div class="modal-content">
 		<div class="trackList-header" v-bind:style="{ 'background-image': `linear-gradient(to bottom, transparent 0%, var(--main-modal-background) 100%), url('${image}')` }">
-			<h4>{{ title }}</h4>
-			<h6 v-if="metadata" style="display: inline;">{{ metadata }}</h6>
-			<span class="right hide-on-small-only" v-if="release_date"> {{ release_date }} </span>
+			<div class="valign-wrapper">
+				<h4 style="width: calc(100% - 56px - 8px);display: inline-block; margin:0px;">{{ title }}</h4>
+				<a id="download_all_tracks" v-bind:data-link="link" class="fab deezloader-primary white-text clickable"><i class="material-icons">file_download</i></a>
+			</div>
 		</div>
 		<div class="modal-container">
-			<table class="highlight col s12">
-				<thead>
-				<tr>
-					<td v-for="data in head" v-html="data.title" v-bind:style = "{ 'width': `${data.width ? data.width : 'auto'}`}" v-bind:class="{ 'hide-on-med-and-up' : data.smallonly, 'hide-on-small-only': data.hideonsmall }"></td>
-				</tr>
-				</thead>
-				<tbody id="modal_trackList_table_trackList_tbody_loadingIndicator" class="hide">
+			<table>
+				<tbody id="modal_artist_table_trackList_tbody_loadingIndicator" class="hide">
 				<tr>
 					<td class="center" colspan="6">
 						<div class="preloader-wrapper big active">
@@ -845,18 +830,62 @@
 					</td>
 				</tr>
 				</tbody>
-				<tbody id="modal_trackList_table_trackList_tbody_trackList" class="hide">
+				<tbody id="modal_artist_table_trackList_tbody_noResults" class="hide">
+					<tr>
+						<td class="center"><%= __('Nothing found!')%></td>
+					</tr>
 				</tbody>
 			</table>
+			<div v-if="body" class="row">
+				<div class="col s12">
+		      <ul id="artist-tabs" class="row tabs tabs-fixed-width">
+						<template v-for="(item, name, index) in body">
+							<li class="tab"><a v-bind:class="index==0 ? 'active' : ''" v-bind:href="'#artist_' + name" v-on:click="changeTab(name)">{{ name }}</a></li>
+						</template>
+		      </ul>
+				</div>
+				<div v-for="(item, name) in body" v-bind:id="'artist_' + name"></div>
+				<table class="highlight col s12">
+					<thead>
+					<tr>
+						<td v-for="data in head" v-on:click="data.sortKey ? sortBy(data.sortKey) : null" v-bind:style = "{ 'width': `${data.width ? data.width : 'auto'}`}" v-bind:class="{ 'hide-on-med-and-up' : data.smallonly, 'hide-on-small-only': data.hideonsmall, 'sort-asc': data.sortKey == sortKey && sortOrder == 'asc', 'sort-desc': data.sortKey == sortKey && sortOrder == 'desc', 'sortable': data.sortKey, 'clickable': data.sortKey }">
+							{{data.title}}
+						</td>
+					</tr>
+					</thead>
+					<tbody>
+						<template v-for="release in showTable">
+							<tr>
+							<td class="hide-on-med-and-up">
+								<a href="#" v-on:click="moreInfo(release.link, $event)" class="album_chip" v-bind:data-link="release.link"><div class="chip"><img v-bind:src="release.cover_small || 'img/noCover.jpg'"/><i v-if="release.explicit_lyrics" class="material-icons valignicon tiny materialize-red-text tooltipped" data-tooltip="Explicit">explicit</i> {{release.title}}</div></a>
+								<i v-if="checkNewRelease(release.release_date)" class="material-icons valignicon small" style="color:#FF7300">fiber_new</i>
+								<p class="remove-margin secondary-text">{{release.release_date}}</p>
+							</td>
+							<td class="hide-on-small-only breakline">
+								<a href="#" v-on:click="moreInfo(release.link, $event)" class="album_chip" v-bind:data-link="release.link"><div class="chip"><img v-bind:src="release.cover_small || 'img/noCover.jpg'"/>
+									<i v-if="release.explicit_lyrics" class="material-icons valignicon tiny materialize-red-text tooltipped" data-tooltip="Explicit">explicit</i>
+									{{release.title}}
+								</div></a>
+								<i v-if="checkNewRelease(release.release_date)" class="material-icons valignicon small" style="color:#FF7300;">fiber_new</i>
+							</td>
+							<td class="hide-on-small-only">{{release.release_date}}</td>
+							<td><button class="waves-effect btn-flat" v-on:click="downloadClick(release.link, $event)" v-on:contextmenu="downloadRClick(release.link, $event)" v-bind:data-link="release.link"><i class="material-icons">file_download</i></button></td>
+							</tr>
+						</template>
+					</tbody>
+					<tbody id="modal_artist_table_trackList_tbody_trackList" class="hide">
+					</tbody>
+				</table>
+	    </div>
+
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button id="download_all_tracks" v-bind:data-link="link" class="btn btn-flat waves-effect waves-light left"><%= __('Download {{ type }}', {type: '{{ type }}'})%></button>
 		<button class="modal-close waves-effect btn-flat"><%= __('Close')%></button>
 	</div>
 </div>
 
-<!--##########################################MODAL_TRACKLISTALBUM###########################################-->
+<!--##########################################MODAL_TRACKLIST###########################################-->
 <div id="modal_trackListSelective" class="modal modal-fixed-footer modal-custom-header">
 	<div class="modal-content">
 		<div class="trackList-header" v-bind:style="{ 'background-image': `linear-gradient(to bottom, transparent 0%, var(--main-modal-background) 100%), url('${image}')` }">
@@ -1077,9 +1106,10 @@
 							<th style="width: 56px;"><!--download_link--></th>
 						</tr>
 					</thead>
+					<tbody id="tab_search_table_results_tbody_results"></tbody>
 					<tbody id="tab_search_table_results_tbody_loadingIndicator" class="hide loadingTab">
 						<tr>
-							<td class="center">
+							<td class="center" colspan="7">
 								<div class="preloader-wrapper big active">
 									<div class="spinner-layer spinner-blue-only">
 										<!-- Spinner Code -->
@@ -1089,7 +1119,6 @@
 							</td>
 						</tr>
 					</tbody>
-					<tbody id="tab_search_table_results_tbody_results"></tbody>
 					<tbody id="tab_search_table_results_tbody_noResults" class="hide">
 						<tr>
 							<td class="center"><%= __('Nothing found!')%></td>
@@ -1286,6 +1315,7 @@
 <script type="text/javascript" src="js/socket.io.js"></script>
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript" src="js/lodash.min.js"></script>
 <script type="text/javascript" src="js/i18n.min.js"></script>
 <script type="text/javascript" src="js/vue.min.js"></script>
 <script type="text/javascript" src="js/appBase.js"></script>

@@ -1,5 +1,6 @@
 # Deezloader Remix
-### Latest Version: 4.3.0
+# This app is discontinued
+### Latest Version: 4.4.0
 Deezloader Remix is an improved version of Deezloader based on the Reborn branch.<br/>
 With this app you can download songs, playlists and albums directly from Deezer's Server in a single and well packaged app.
 

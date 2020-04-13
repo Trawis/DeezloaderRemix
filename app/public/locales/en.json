@@ -242,5 +242,13 @@
 	"Start Case": "Start Case",
 	"Sentence case": "Sentence case",
 	"Case for Title": "Case for Title",
-	"Case for Artist": "Case for Artist"
+	"Case for Artist": "Case for Artist",
+	"Default": "Default",
+	"& and feat.": "& and feat.",
+	"Artist Tag Format": "Artist Tag Format",
+	"Add featured artists to trackname": "Add featured artists to trackname",
+	"Use Null Separator in MP3s": "Use Null Separator in MP3s",
+	"Preview Volume": "Preview Volume",
+	"Illegal character replacer": "Illegal character replacer",
+	"Create album folders for single tracks": "Create album folders for single tracks"
 }

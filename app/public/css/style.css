@@ -184,7 +184,7 @@ nav {
 	top: -1px;
 	padding-top: 32px;
 	padding-bottom: 60px;
-	-webkit-clip-path: polygon(0 0, 0 60%, 100% 100%, 100% 0);
+	clip-path: polygon(0 0, 0 60%, 100% 100%, 100% 0);
 	width: 100%;
 }
 .deezloader-black{
@@ -230,7 +230,7 @@ nav {
 .link_analyzer_maininfo{
 	display: inline;
 	padding-left: 16px;
-	width: -webkit-fill-available;
+	width: 100%;
 }
 
 .link_analyzer_sideinfo{
@@ -404,7 +404,7 @@ footer.page-footer{
 	z-index: 99;
 	padding-top: 0;
 	color: rgba(255,255,255,0.7);
-	-webkit-clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 75%);
+	clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 75%);
 }
 
 a.single-cover {
@@ -532,4 +532,25 @@ input[type=search]::-webkit-search-cancel-button {
 
 .error-banner button:hover {
 	background: rgba(255, 255, 255, 0.1);
+}
+
+td.sortable{
+	-webkit-user-select: none;
+	user-select: none;
+}
+td.sort-asc:after {content: "\25b2";font-size: 0.7em;padding-left: 3px;line-height: 0.7em;}
+td.sort-desc:after {content: "\25bc";font-size: 0.7em;padding-left: 3px;line-height: 0.7em;}
+
+.fab{
+	width: 56px;
+  height: 56px;
+  border-radius: 28px;
+	display: inline-block;
+}
+.fab i{
+	font-size: 24px;
+  padding: 16px;
+}
+.clickable{
+  cursor: pointer;
 }
